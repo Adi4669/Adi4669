@@ -1,0 +1,26 @@
+<style>
+  .red {
+    background-color: red;
+    color: white;
+  }
+</style>
+
+<nav class="tabs-container" aria-label="Tabs">
+  <button class="tab nav-btn" data-tab="mvp">
+    Minimum Viable Product (MVP)
+  </button>
+  <button class="tab nav-btn" data-tab="future">Future Enhancements</button>
+</nav>
+
+<script>
+  const buttons = document.querySelectorAll(".nav-btn");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      // remove red from all buttons
+      buttons.forEach((b) => b.classList.remove("red"));
+      // add red only to clicked button
+      btn.classList.add("red");
+    });
+  });
+</script>

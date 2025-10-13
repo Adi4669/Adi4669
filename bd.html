@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blood_Donation</title>
+    <link rel="stylesheet" href="bd.css" />
+  </head>
+  <body>
+    <!-- <div class="header">
+      <div class="l-sec">
+        <div class="hmbrg-menu">
+          <img class="ham-menu" src="images/hamburger-menu.svg" alt="" />
+          <div class="tooltip">Menu</div>
+        </div> -->
+    <!-- <img
+          class="logo"
+          src="images/Gemini_Generated_Image_l1fp5l1fp5l1fp5l.png"
+          alt="" /> -->
+    <!-- </div>
+      <div class="m-sec"></div>
+      <div class="r-sec">
+        <button class="want">Want Blood</button>
+        <button class="donate">Want to Donate Blood</button>
+        <a href="login.html" class="login" target="_blank">Log-in</a>
+      </div>
+    </div> -->
+    <header class="header">
+      <nav class="container navbar">
+        <div class="hmbrg-menu">
+          <img class="ham-menu" src="images/hamburger-menu.svg" alt="" />
+          <div class="tooltip">Menu</div>
+        </div>
+        <div class="desktop-nav">
+          <a
+            href="#overview"
+            class="nav-link"
+            onclick="location.href='#overview'"
+            >Overview</a
+          >
+          <a
+            href="#features"
+            class="nav-link"
+            onclick="location.href='#features'"
+            >Features</a
+          >
+          <a href="login.html" onclick="pageTransition(event)" class="want"
+            >Want Blood</a
+          >
+          <a href="login.html" onclick="pageTransition(event)" class="donate"
+            >Want to Donate Blood</a
+          >
+          <a href="login.html" onclick="pageTransition(event)" class="login"
+            >Log-in</a
+          >
+          <!-- <a href="#tech-stack" class="nav-link">Tech Stack</a>
+          <a href="#roadmap" class="nav-link">Roadmap</a> -->
+        </div>
+      </nav>
+    </header>
+
+    <div class="main" id="overview">
+      <p
+        style="
+          font-size: 75px;
+          text-align: center;
+          margin-top: 75px;
+          margin-bottom: 0;
+          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        ">
+        THE RED THREAD
+      </p>
+      <p style="font-size: 30px; margin-top: 10px; text-align: center">
+        -Weaving a Digital Lifeline
+      </p>
+    </div>
+    <div
+      style="
+        max-width: 1000px;
+        text-align: center;
+        margin-top: 100px;
+        margin-bottom: 200px;
+      ">
+      <h1 style="text-align: center; font-size: 36px">
+        A Lifesaving Connection
+      </h1>
+      <p style="text-align: center; font-size: 21px">
+        This interactive roadmap outlines the plan for the Blood Donation &
+        Emergency Connect platform, an application designed to bridge the gap
+        between donors and those in urgent need. Explore the features,
+        technology, and development plan below.
+      </p>
+    </div>
+
+    <section id="features">
+      <div class="features">
+        <h2>Platfrom Features</h2>
+        <h3 style="font-weight: 400">
+          Core functionalities separated by development focus.
+        </h3>
+      </div>
+
+      <div tabs-nav>
+        <nav class="tabs-container" aria-label="Tabs">
+          <button class="tab nav-btn" data-tab="mvp">
+            Minimum Viable Product (MVP)
+          </button>
+          <button class="tab nav-btn" data-tab="future">
+            Future Enhancements
+          </button>
+        </nav>
+      </div>
+
+      <div id="mvp" class="tab-content feature-grid active">
+        <div class="feature-card">
+          <h3>User Authentication</h3>
+          <p>
+            Secure sign-up and login for donors and recipients, including
+            profile creation with essential details like blood type, location,
+            and contact info.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Blood Request System</h3>
+          <p>
+            Recipients can post urgent blood requests. Donors receive real-time
+            notifications for matching blood types in their vicinity.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Donor Search & Filtering</h3>
+          <p>
+            A searchable database of registered donors, filterable by blood type
+            and geographic location to find matches quickly.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Basic Geolocation</h3>
+          <p>
+            Display donor locations on a simple map to help recipients visualize
+            nearby potential donors and blood banks.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>In-App Messaging</h3>
+          <p>
+            A secure and private communication channel for recipients and
+            potential donors to coordinate donation logistics.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Admin Dashboard</h3>
+          <p>
+            A simple backend interface for admins to manage users, verify donor
+            information, and oversee platform activity.
+          </p>
+        </div>
+      </div>
+    </section>
+    <script>
+      function pageTransition(e) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+          window.location = e.target.href;
+        }, 500);
+      }
+
+      const buttons = document.querySelectorAll(".nav-btn");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          // remove red from all buttons
+          buttons.forEach((b) => b.classList.remove("red"));
+          // add red only to clicked button
+          btn.classList.add("red");
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Feature tabs functionality
+        const tabs = document.querySelectorAll(".tab");
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            tabs.forEach((item) => item.classList.remove("tab-active"));
+            tab.classList.add("tab-active");
+            const targetId = tab.getAttribute("data-tab");
+            tabContents.forEach((content) => {
+              content.classList.remove("active");
+              if (content.id === targetId) {
+                content.classList.add("active");
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

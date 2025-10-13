@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login-window</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="home">
+        <a href="bd.html" class="home-btn" onclick="pageTransition(event)">
+          The Red Thread
+        </a>
+        <span class="tooltip">Home</span>
+      </div>
+    </div>
+    <h1
+      style="
+        text-align: center;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 40px;
+      ">
+      The Red Thread Log-in
+    </h1>
+    <div>
+      <div id="form1" class="login-grid">
+        <h2>Blood Bank Login: Portal/Application</h2>
+        <p style="font-size: 20px">
+          Enter your username and password to login:
+        </p>
+        <input
+          class="input"
+          placeholder="Enter Username"
+          name="username"
+          required />
+
+        <p
+          id="error-msg"
+          style="color: red; display: none; margin-top: 10px"></p>
+
+        <input
+          class="input"
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required />
+
+        <div class="but-layout">
+          <a href="#" class="signin" onclick="nextPage(event);">Sign In!</a>
+          <a class="signup">New User?<br />Sign Up!</a>
+        </div>
+        <a class="fpw" href="">Forgot Password?</a>
+      </div>
+
+      <div id="form2" style="display: none">
+        <h2 style="text-align: center">Welcome!</h2>
+        <p>You have successfully logged in.</p>
+      </div>
+    </div>
+
+    <script>
+      function nextPage(e) {
+        e.preventDefault();
+
+        const form = document.getElementById("form1");
+        const username = form
+          .querySelector('input[name="username"]')
+          .value.trim();
+        const password = form
+          .querySelector('input[name="password"]')
+          .value.trim();
+        const errorMsg = document.getElementById("error-msg");
+
+        if (username === "" || password === "") {
+          errorMsg.textContent = "Error: Please fill all the fields!";
+          errorMsg.style.display = "block";
+          return;
+        }
+
+        errorMsg.style.display = "none";
+        alert("Success! Logging in...");
+        document.getElementById("form1").style.display = "none";
+        document.getElementById("form2").style.display = "block";
+      }
+
+      function pageTransition(e) {
+        e.preventDefault(); // stop instant navigation
+        document.body.classList.add("fade-out"); // trigger CSS animation
+        setTimeout(() => {
+          window.location = e.target.href; // go to the page after delay
+        }, 500); // delay (ms) matches animation duration
+      }
+    </script>
+  </body>
+</html>

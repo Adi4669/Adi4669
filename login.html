@@ -23,10 +23,10 @@
       ">
       The Red Thread Log-in
     </h1>
-    <div>
+    <div id="container" class="login-container">
       <div id="form1" class="login-grid">
         <h2>Blood Bank Login: Portal/Application</h2>
-        <p style="font-size: 20px">
+        <p style="font-size: 20px; margin-top: 0">
           Enter your username and password to login:
         </p>
         <input
@@ -47,14 +47,16 @@
           required />
 
         <div class="but-layout">
-          <a href="#" class="signin" onclick="nextPage(event);">Sign In!</a>
-          <a class="signup">New User?<br />Sign Up!</a>
+          <a href="bd.html" class="signin" onclick="nextPage(event);"
+            >Sign In!</a
+          >
+          <a class="signup" href="signup.html">New User?<br />Sign Up!</a>
         </div>
-        <a class="fpw" href="">Forgot Password?</a>
+        <a class="fpw" href=""><br />Forgot Password?</a>
       </div>
 
       <div id="form2" style="display: none">
-        <h2 style="text-align: center">Welcome!</h2>
+        <h2 id="welcome_msg" style="text-align: center">Welcome!</h2>
         <p>You have successfully logged in.</p>
       </div>
     </div>
@@ -78,6 +80,9 @@
           return;
         }
 
+        const wlcm = document.getElementById("welcome_msg");
+        wlcm.textContent = `Welcome, ${username}!`;
+
         errorMsg.style.display = "none";
         alert("Success! Logging in...");
         document.getElementById("form1").style.display = "none";
@@ -85,11 +90,11 @@
       }
 
       function pageTransition(e) {
-        e.preventDefault(); // stop instant navigation
-        document.body.classList.add("fade-out"); // trigger CSS animation
+        e.preventDefault();
+        document.body.classList.add("fade-out");
         setTimeout(() => {
-          window.location = e.target.href; // go to the page after delay
-        }, 500); // delay (ms) matches animation duration
+          window.location = e.target.href;
+        }, 500);
       }
     </script>
   </body>

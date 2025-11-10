@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign-up</title>
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="home">
+        <a href="bd.html" class="home-btn" onclick="pageTransition(event)">
+          The Red Thread
+        </a>
+        <span class="tooltip">Home</span>
+      </div>
+    </div>
+    <h1
+      style="
+        text-align: center;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 40px;
+      ">
+      The Red Thread <br />
+      Sign-up
+    </h1>
+    <div id="container" class="login-container">
+      <div id="form1" class="login-grid">
+        <h1 style="text-align: center; font-weight: 800">
+          Blood Bank Login: Portal/Application
+        </h1>
+        <p style="font-size: 24px; text-align: center">
+          Enter your details to sign up:
+        </p>
+        <input
+          class="input"
+          placeholder="Enter Username"
+          name="username"
+          required />
+        <input
+          class="input"
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required />
+        <input
+          class="input"
+          type="email"
+          placeholder="Enter Email"
+          name="email"
+          required />
+        <input
+          class="input"
+          type="text"
+          placeholder="Enter Phone Number"
+          name="phone"
+          required />
+        <label for="blood_group"></label>
+        <input
+          list="blood_groups"
+          class="input"
+          type="text"
+          name="blood_group"
+          id="blood_group"
+          placeholder="Enter Blood Group"
+          required />
+        <datalist id="blood_groups">
+          <option value="A+"></option>
+          <option value="A-"></option>
+          <option value="B+"></option>
+          <option value="B-"></option>
+          <option value="AB+"></option>
+          <option value="AB-"></option>
+          <option value="O+"></option>
+          <option value="O-"></option>
+        </datalist>
+
+        <label for="city"></label>
+        <input
+          list="cities"
+          name="city"
+          id="city"
+          class="input"
+          type="text"
+          placeholder="Enter City"
+          required />
+        <datalist id="cities">
+          <option value="Bengaluru"></option>
+          <option value="Ahmedabad"></option>
+          <option value="Chennai"></option>
+          <option value="Delhi"></option>
+          <option value="Kolkata"></option>
+          <option value="Mumbai"></option>
+          <option value="Hyderabad"></option>
+        </datalist>
+      </div>
+      <a href="bd.html" onclick="nexPage(event)" class="create"
+        >Create Account!</a
+      >
+    </div>
+
+    <script>
+      function nextPage(e) {
+        e.preventDefault();
+        const form = document.getElementById("form1");
+        const username = form
+          .querySelector('input[name="username"]')
+          .value.trim();
+        const password = form
+          .querySelector('input[name="password"]')
+          .value.trim();
+        const email = form.querySelector('input[name="email"]').value.trim();
+        const phone = form.querySelector('input[name="phone"]').value.trim();
+        const blood_group = form
+          .querySelector('input[name="blood_group"]')
+          .value.trim();
+        const city = form.querySelector('input[name="city"]').value.trim();
+        if (
+          username === "" ||
+          password === "" ||
+          email === "" ||
+          phone === "" ||
+          blood_group === "" ||
+          city === ""
+        ) {
+          alert("Error: Please fill all the fields!");
+          return;
+        }
+        alert("Success! Account created.");
+        window.location = e.target.href;
+      }
+    </script>
+  </body>
+</html>

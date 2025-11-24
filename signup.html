@@ -94,12 +94,22 @@
           <option value="Hyderabad"></option>
         </datalist>
       </div>
-      <a href="bd.html" onclick="nexPage(event)" class="create"
+      <a
+        href="signed_in.html"
+        onclick="nexPage(event), pageTransition(event)"
+        class="create"
         >Create Account!</a
       >
     </div>
 
     <script>
+      function pageTransition(e) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+          window.location = e.target.href;
+        }, 500);
+      }
       function nextPage(e) {
         e.preventDefault();
         const form = document.getElementById("form1");

@@ -9,10 +9,11 @@
   <body>
     <header class="header">
       <nav class="container navbar">
-        <div class="hmbrg-menu">
-          <img class="ham-menu" src="images/hamburger-menu.svg" alt="" />
+        <button id="menuToggle" class="hmbrg-menu">
+          <img class="ham-menu" src="images/hamburger-menu.svg">
           <div class="tooltip">Menu</div>
-        </div>
+        </button>
+
         <div class="desktop-nav">
           <a
             href="#overview"
@@ -170,7 +171,8 @@
       </div>
     </section>
     <div class="app" id="appRoot">
-      <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <aside id="sidebar" class="sidebar collapsed">
+
         <div class="brand" role="banner">
           <div class="logo" aria-hidden="true">BD</div>
           <div style="display: flex; flex-direction: column; min-width: 0">
@@ -334,191 +336,118 @@
       </aside>
     </div>
 
-    <script>
-      function pageTransition(e) {
-        e.preventDefault();
-        document.body.classList.add("fade-out");
-        setTimeout(() => {
-          window.location = e.target.href;
-        }, 500);
-      }
+      <script>
+    // --- 1. Page Transitions ---
+    function pageTransition(e) {
+      e.preventDefault();
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location = e.target.href;
+      }, 500);
+    }
 
-      const buttons = document.querySelectorAll(".nav-btn");
+    // --- 2. Navigation Button Highlighting ---
+    const buttons = document.querySelectorAll(".nav-btn");
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", function() {
+        // remove red from all buttons
+        buttons.forEach((b) => b.classList.remove("red"));
+        // add red only to clicked button
+        btn.classList.add("red");
+      });
+    });
 
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          // remove red from all buttons
-          buttons.forEach((b) => b.classList.remove("red"));
-          // add red only to clicked button
-          btn.classList.add("red");
+    // --- 3. Feature Tabs Functionality ---
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabs = document.querySelectorAll(".tab");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((item) => item.classList.remove("tab-active"));
+          tab.classList.add("tab-active");
+          const targetId = tab.getAttribute("data-tab");
+          tabContents.forEach((content) => {
+            content.classList.remove("active");
+            if (content.id === targetId) {
+              content.classList.add("active");
+            }
+          });
         });
       });
 
-      document.addEventListener("DOMContentLoaded", () => {
-        // Feature tabs functionality
-        const tabs = document.querySelectorAll(".tab");
-        const tabContents = document.querySelectorAll(".tab-content");
-        tabs.forEach((tab) => {
-          tab.addEventListener("click", () => {
-            tabs.forEach((item) => item.classList.remove("tab-active"));
-            tab.classList.add("tab-active");
-            const targetId = tab.getAttribute("data-tab");
-            tabContents.forEach((content) => {
-              content.classList.remove("active");
-              if (content.id === targetId) {
-                content.classList.add("active");
-              }
-            });
-          });
+      // --- 4. NEW Sidebar Logic (Slide-in Drawer) ---
+      const sidebar = document.getElementById("sidebar");
+      const openBtn = document.getElementById("menuToggle"); // The Hamburger in the header
+      const closeBtn = document.getElementById("collapseBtn"); // The toggle button inside sidebar
+
+      // Create the overlay dynamically
+      const overlay = document.createElement("div");
+      overlay.className = "overlay";
+      document.body.appendChild(overlay);
+
+      function openSidebar() {
+        sidebar.classList.add("active");
+        overlay.classList.add("active");
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove("active");
+        overlay.classList.remove("active");
+      }
+
+      // Event Listener: Open (Hamburger)
+      if (openBtn) {
+        openBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openSidebar();
         });
-      })();
-      (function () {
-        const sidebar = document.getElementById("sidebar");
-        const collapseBtn = document.getElementById("collapseBtn");
-        const app = document.getElementById("appRoot");
+      }
 
-        // restore state
-        const savedCollapsed =
-          localStorage.getItem("sidebarCollapsed") === "true";
-        const savedOpenMobile =
-          localStorage.getItem("sidebarOpenMobile") === "true";
+      // Event Listener: Close (Button inside sidebar)
+      if (closeBtn) {
+        closeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeSidebar();
+        });
+      }
 
-        function setCollapsed(val, save = true) {
-          sidebar.classList.toggle("collapsed", val);
-          collapseBtn.setAttribute("aria-expanded", String(!val));
-          // change icon: hamburger vs chevron
-          const icon = document.getElementById("collapseIcon");
-          if (val) {
-            icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12"/>'; // X (close) style
-          } else {
-            icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18"></path>'; // hamburger
-          }
-          if (save) localStorage.setItem("sidebarCollapsed", val);
+      // Event Listener: Close (Clicking outside/Overlay)
+      overlay.addEventListener("click", closeSidebar);
+
+      // Event Listener: Close (Pressing Escape key)
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && sidebar.classList.contains("active")) {
+          closeSidebar();
         }
+      });
 
-        // initial
-        setCollapsed(savedCollapsed, false);
+      // --- 5. Submenu Logic (Donors Dropdown) ---
+      document.querySelectorAll('.nav-item[aria-haspopup="true"]').forEach((item) => {
+        const toggleBtn = item.querySelector(".submenu-toggle");
+        const submenu = item.querySelector("[data-submenu]");
+        if (!toggleBtn || !submenu) return;
 
-        // collapse/expand on click
-        collapseBtn.addEventListener("click", () => {
-          const isCollapsed = sidebar.classList.contains("collapsed");
-          setCollapsed(!isCollapsed);
+        toggleBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isOpen = submenu.classList.toggle("open");
+          item.setAttribute("aria-expanded", String(isOpen));
+          
+          // Rotate arrow icon if exists
+          toggleBtn.style.transform = isOpen ? "rotate(180deg)" : "rotate(0deg)";
         });
+      });
 
-        // submenu toggles
-        document
-          .querySelectorAll('.nav-item[aria-haspopup="true"]')
-          .forEach((item) => {
-            const toggleBtn = item.querySelector(".submenu-toggle");
-            const submenu = item.querySelector("[data-submenu]");
-            if (!toggleBtn || !submenu) return;
-            toggleBtn.addEventListener("click", (e) => {
-              e.stopPropagation();
-              const isOpen = submenu.classList.toggle("open");
-              item.setAttribute("aria-expanded", String(isOpen));
-            });
-          });
-
-        // simple menu item activation (you'd replace with actual navigation)
-        document.querySelectorAll(".nav-item[data-key]").forEach((it) => {
-          it.addEventListener("click", () => {
-            document
-              .querySelectorAll(".nav-item[data-key]")
-              .forEach((x) => x.removeAttribute("aria-current"));
-            it.setAttribute("aria-current", "page");
-            // focus main content for accessibility
-            const main = document.getElementById("mainContent");
-            main.focus();
-          });
+      // --- 6. Active State for Menu Items ---
+      document.querySelectorAll(".nav-item[data-key]").forEach((it) => {
+        it.addEventListener("click", () => {
+          document.querySelectorAll(".nav-item[data-key]").forEach((x) =>
+            x.removeAttribute("aria-current")
+          );
+          it.setAttribute("aria-current", "page");
         });
-
-        // keyboard shortcuts
-        document.addEventListener("keydown", (e) => {
-          // M toggles menu
-          if (e.key === "m" || e.key === "M") {
-            e.preventDefault();
-            // If mobile overlay mode, toggle sidebar open class
-            if (window.matchMedia("(max-width:820px)").matches) {
-              sidebar.classList.toggle("open");
-              app.classList.toggle(
-                "overlay-active",
-                sidebar.classList.contains("open")
-              );
-              localStorage.setItem(
-                "sidebarOpenMobile",
-                String(sidebar.classList.contains("open"))
-              );
-            } else {
-              setCollapsed(!sidebar.classList.contains("collapsed"));
-            }
-          }
-          if (e.key === "Escape") {
-            if (
-              window.matchMedia("(max-width:820px)").matches &&
-              sidebar.classList.contains("open")
-            ) {
-              sidebar.classList.remove("open");
-              app.classList.remove("overlay-active");
-            }
-          }
-        });
-
-        // overlay click to close (mobile)
-        app.addEventListener("click", (ev) => {
-          if (window.matchMedia("(max-width:820px)").matches) {
-            if (
-              sidebar.classList.contains("open") &&
-              !sidebar.contains(ev.target)
-            ) {
-              sidebar.classList.remove("open");
-              app.classList.remove("overlay-active");
-            }
-          }
-        });
-
-        // restore mobile open state if saved
-        if (savedOpenMobile && window.matchMedia("(max-width:820px)").matches) {
-          sidebar.classList.add("open");
-          app.classList.add("overlay-active");
-        }
-
-        // Accessibility: make submenu-toggle keyboard reachable
-        document.querySelectorAll(".submenu-toggle").forEach((btn) => {
-          btn.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              btn.click();
-            }
-          });
-        });
-
-        // ensure focus outline for keyboard users
-        document.body.addEventListener("mousedown", () => {
-          document.documentElement.style.scrollBehavior = "smooth";
-        });
-        const hamb = document.querySelector(".ham-menu");
-        if (hamb) {
-          hamb.style.cursor = "pointer";
-          hamb.addEventListener("click", (e) => {
-            e.stopPropagation();
-            // on small screens show overlay drawer
-            if (window.matchMedia("(max-width:820px)").matches) {
-              sidebar.classList.toggle("open");
-              app.classList.toggle(
-                "overlay-active",
-                sidebar.classList.contains("open")
-              );
-              localStorage.setItem(
-                "sidebarOpenMobile",
-                String(sidebar.classList.contains("open"))
-              );
-            } else {
-              // on wider screens collapse/expand
-              setCollapsed(!sidebar.classList.contains("collapsed"));
-            }
-          });
-        }
-      })();
-    </script>
+      });
+    });
+  </script>
   </body>
 </html>

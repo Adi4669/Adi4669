@@ -63,7 +63,7 @@ body.fade-out {
 
 .header {
   position: fixed;
-  background-color: #C1121F; /* deep red */
+  background-color: #fa303e; /* deep red */
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
   top: 0;
   right: 0;
@@ -73,6 +73,8 @@ body.fade-out {
   display: flex;
   align-items: center;
 }
+
+
 
 .navbar {
   display: flex;
@@ -301,8 +303,7 @@ body.fade-out {
   --text: #eef2f7;
   --muted: #9aa4b2;
   --width-open: 260px;
-  --width-closed: 72px;
-  --transition: 250ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html,
@@ -313,26 +314,59 @@ body {
 
 /* Layout */
 .app {
-  display: flex;
+  display: block;
   min-height: 100vh;
   background: linear-gradient(180deg, #fbfdff 0%, #f3f7fb 100%);
 }
 
 /* Sidebar */
 .sidebar {
+  position: fixed; /* Takes it out of the document flow */
+  top: 0;
   left: 0;
-  background: var(--panel);
-  color: var(--text);
-  width: var(--width-open);
-  transition: width var(--transition);
-  box-shadow: 2px 0 12px rgba(3, 7, 18, 0.12);
+  height: 100vh; /* Full height */
+  width: 250px; /* Width when open */
+  background-color: #0f172a; /* Dark background */
+  color: white;
+  z-index: 1000; /* Ensures it sits on top of other content */
+  
+  /* 2. Hide it off-screen by default */
+  transform: translateX(-100%); 
+  transition: transform 0.3s ease-in-out;
+  
+  /* Optional: styling for looks */
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5);
 }
+
+/* 3. The class that brings it back on screen */
+.sidebar.active {
+  transform: translateX(0);
+}
+
 .sidebar.collapsed {
   width: var(--width-closed);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 9999; /* Just below the sidebar */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .brand {
@@ -340,7 +374,9 @@ body {
   align-items: center;
   gap: 12px;
   padding: 8px 6px;
+  margin-bottom: 20px;
 }
+
 .logo {
   width: 40px;
   height: 40px;
@@ -353,16 +389,14 @@ body {
   color: white;
   font-size: 20px;
 }
+
 .brand .title {
   font-weight: 600;
   font-size: 16px;
   letter-spacing: 0.2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Toggle button */
+/* Close Button inside Sidebar */
 .toggle-btn {
   margin-left: auto;
   background: transparent;
@@ -370,10 +404,14 @@ body {
   color: var(--muted);
   cursor: pointer;
   padding: 6px;
-  border-radius: 8px;
 }
+
 .toggle-btn:focus {
   outline: 2px solid rgba(255, 255, 255, 0.06);
+}
+
+.toggle-btn:hover {
+  color: white;
 }
 
 /* Nav */
@@ -383,25 +421,32 @@ nav {
 }
 .nav-list {
   list-style: none;
-  padding: 8px;
+  padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
+
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   cursor: pointer;
   color: var(--text);
-  user-select: none;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(5px);
+}
+
 .nav-item .icon {
-  width: 28px;
-  height: 28px;
+  width: 24px;
   display: flex;
   align-items: center;
   justify-content: center;

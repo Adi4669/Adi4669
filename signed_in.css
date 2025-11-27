@@ -63,7 +63,8 @@ body.fade-out {
 
 .header {
   position: fixed;
-  background-color: #fa303e; /* deep red */
+  background-color: rgb(221, 33, 33, 0.9); /* deep red */
+  backdrop-filter: blur(5px);
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
   top: 0;
   right: 0;
@@ -72,9 +73,8 @@ body.fade-out {
   z-index: 9999;
   display: flex;
   align-items: center;
+  overflow: visible; /* allow tooltips to escape header box */
 }
-
-
 
 .navbar {
   display: flex;
@@ -107,28 +107,40 @@ body.fade-out {
 }
 
 .hmbrg-menu {
+  margin: 0;
   position: relative;
   border: none;
+  background-color: transparent;
 }
 
+/* Tooltip: hidden by default, appears on hover or keyboard focus */
 .hmbrg-menu .tooltip {
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
   position: absolute;
-  background-color: rgb(99, 99, 99);
-  color: rgb(255, 255, 255);
+  background-color: rgba(99, 99, 99, 0.95);
+  color: #fff;
   border-radius: 4px;
   left: 13px;
-  bottom: -40px;
+  bottom: -24px; /* a little lower to clear the button */
   padding: 6px 10px;
-  pointer-events: none;
+  white-space: nowrap;
+  pointer-events: none; /* keep pointer events on the button itself */
   opacity: 0;
-  z-index: 200;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
+  z-index: 10002;
 }
 
-.hmbrg-menu:hover .tooltip{
+/* Show tooltip on hover or when the button receives keyboard focus */
+.hmbrg-menu:hover .tooltip,
+.hmbrg-menu:focus .tooltip,
+.hmbrg-menu:focus-within .tooltip {
   opacity: 1;
-  transition: 0.6s;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .header-title {
@@ -202,26 +214,23 @@ body.fade-out {
   justify-content: center;
 }
 
-.tab {
-  white-space: nowrap;
-  padding: 6px;
-  font-weight: 500;
-  font-size: 15px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  column-gap: 10px;
-  /* border-bottom: 2px solid transparent;
-  border-right: none;
-  border-top: none;
-  border-left: none; */
-  transition: 0.3s;
-}
-
-.tab:hover {
-  background-color: #E63946;
-  color: white;
-  border-bottom: solid 2px white;
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0; /* top:0; right:auto; bottom:0; left:0 */
+  height: 100vh;
+  width: 260px;
+  background: linear-gradient(180deg, #071028 0%, #0b1220 100%);
+  color: var(--text);
+  z-index: 10010; /* must be above overlay and header */
+  transform: translateX(-100%);
+  transition: transform 280ms cubic-bezier(.2,.9,.2,1), width 220ms ease;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 14px;
+  box-shadow: 4px 0 28px rgba(2,6,23,0.6);
+  border-right: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .red {
@@ -320,26 +329,7 @@ body {
 }
 
 /* Sidebar */
-.sidebar {
-  position: fixed; /* Takes it out of the document flow */
-  top: 0;
-  left: 0;
-  height: 100vh; /* Full height */
-  width: 250px; /* Width when open */
-  background-color: #0f172a; /* Dark background */
-  color: white;
-  z-index: 1000; /* Ensures it sits on top of other content */
-  
-  /* 2. Hide it off-screen by default */
-  transform: translateX(-100%); 
-  transition: transform 0.3s ease-in-out;
-  
-  /* Optional: styling for looks */
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-}
+/* Sidebar */
 
 /* 3. The class that brings it back on screen */
 .sidebar.active {
@@ -352,16 +342,13 @@ body {
 
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-  z-index: 9999; /* Just below the sidebar */
+  inset: 0;
+  background: rgba(2,6,23,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 10005; /* below sidebar (10010) but above page content */
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 240ms ease, visibility 240ms ease;
 }
 
 .overlay.active {
@@ -378,22 +365,24 @@ body {
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), #ff7b7b);
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#E63946 0%, #FF7B7B 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  color: white;
-  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 0 8px 20px rgba(230,57,70,0.12);
 }
 
 .brand .title {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 16px;
   letter-spacing: 0.2px;
+  color: #F8FAFC;
 }
 
 /* Close Button inside Sidebar */
@@ -415,9 +404,10 @@ body {
 }
 
 /* Nav */
-nav {
+.sidebar nav {
   flex: 1;
-  overflow: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .nav-list {
   list-style: none;
@@ -432,40 +422,33 @@ nav {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
   cursor: pointer;
-  color: var(--text);
+  color: #dbe9f5;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: background 180ms ease, transform 180ms ease;
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateX(5px);
+  background: rgba(230,57,70,0.06);
+  transform: translateX(6px);
 }
 
 .nav-item .icon {
-  width: 24px;
-  display: flex;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-}
-.nav-item:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.01)
-  );
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
 }
 .nav-item[aria-current="page"] {
-  background: linear-gradient(
-    90deg,
-    rgba(230, 57, 70, 0.12),
-    rgba(230, 57, 70, 0.03)
-  );
-  color: var(--accent);
+  background: linear-gradient(90deg, rgba(230,57,70,0.14), rgba(230,57,70,0.04));
+  color: #fff;
+  box-shadow: inset 4px 0 0 0 rgba(230,57,70,0.95);
 }
 
 .nav-label {
@@ -474,6 +457,7 @@ nav {
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
+  color: #dbe9f5;
 }
 
 /* Submenu */
@@ -523,7 +507,39 @@ nav {
 }
 .sidebar.collapsed .nav-item {
   justify-content: center;
-  padding: 12px;
+  padding: 10px;
+}
+
+/* Collapsed width for compact state */
+.sidebar.collapsed {
+  width: 72px; /* small preview with icons visible */
+  transition: width 220ms ease;
+}
+
+/* Show subtle dividers between groups */
+.nav-list {
+  gap: 8px;
+}
+
+/* Icon container styling */
+.nav-item .icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  color: #fff;
+}
+
+/* Tweak scrollbar for nav */
+nav::-webkit-scrollbar {
+  width: 8px;
+}
+nav::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
 }
 
 /* Responsive: small screens -> overlay */
@@ -534,7 +550,7 @@ nav {
     top: 0;
     bottom: 0;
     height: 100vh;
-    z-index: 60;
+    z-index: 10001;
     transform: translateX(-105%);
     transition: transform var(--transition);
     width: var(--width-open);

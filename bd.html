@@ -27,37 +27,237 @@
     </div> -->
     <header class="header">
       <nav class="container navbar">
-        <div class="hmbrg-menu">
-          <img class="ham-menu" src="images/hamburger-menu.svg" alt="" />
-          <div class="tooltip">Menu</div>
+        <div class="nav-left">
+          <button
+            id="menuToggle"
+            class="hmbrg-menu"
+            aria-label="Open menu"
+            aria-controls="sidebar"
+            aria-expanded="false">
+            <img class="ham-menu" src="images/hamburger-menu.svg" alt="Menu" />
+            <div class="tooltip">Menu</div>
+          </button>
         </div>
-        <div class="desktop-nav">
-          <a
-            href="#overview"
-            class="nav-link"
-            onclick="location.href='#overview'"
-            >Overview</a
-          >
-          <a
-            href="#features"
-            class="nav-link"
-            onclick="location.href='#features'"
-            >Features</a
-          >
-          <a href="login.html" onclick="pageTransition(event)" class="want"
-            >Want Blood</a
-          >
-          <a href="login.html" onclick="pageTransition(event)" class="donate"
-            >Donate Blood</a
-          >
-          <a href="login.html" onclick="pageTransition(event)" class="login"
-            >Log-in</a
-          >
-          <!-- <a href="#tech-stack" class="nav-link">Tech Stack</a>
-          <a href="#roadmap" class="nav-link">Roadmap</a> -->
+
+        <div class="nav-right">
+          <div class="desktop-nav">
+            <a
+              href="#overview"
+              class="nav-link"
+              onclick="location.href='#overview'"
+              >Overview</a
+            >
+            <a
+              href="#features"
+              class="nav-link"
+              onclick="location.href='#features'"
+              >Features</a
+            >
+            <a href="login.html" onclick="pageTransition(event)" class="want"
+              >Want Blood</a
+            >
+            <a href="login.html" onclick="pageTransition(event)" class="donate"
+              >Donate Blood</a
+            >
+            <a href="login.html" onclick="pageTransition(event)" class="login"
+              >Log-in</a
+            >
+          </div>
         </div>
       </nav>
     </header>
+
+    <!-- <div class="app" id="appRoot">
+      <aside id="sidebar" class="sidebar">
+        <div class="brand" role="banner">
+          <div
+            class="brand-header"
+            style="display: flex; align-items: center; gap: 12px; width: 100%">
+            <div
+              class="logo"
+              aria-hidden="true"
+              style="
+                background: #e63946;
+                color: #fff;
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+                font-weight: 700;
+              ">
+              BD
+            </div>
+            <div style="display: flex; flex-direction: column; min-width: 0">
+              <div class="title" style="color: var(--text); font-weight: 700">
+                Blood Donation
+              </div>
+              <div
+                class="muted desc"
+                style="font-size: 12px; color: var(--muted)">
+                Save lives — one drop at a time
+              </div>
+            </div>
+            <div style="margin-left: auto">
+              <button
+                class="toggle-btn"
+                id="collapseBtn"
+                aria-expanded="true"
+                aria-controls="sidebar"
+                title="Collapse menu"
+                style="
+                  background: transparent;
+                  border: none;
+                  color: var(--muted);
+                ">
+                <svg
+                  id="collapseIcon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <nav>
+          <ul class="nav-list" role="menu" aria-label="Main">
+            <li
+              class="nav-item"
+              role="menuitem"
+              tabindex="0"
+              data-key="dashboard"
+              aria-current="page">
+              <span class="icon" aria-hidden="true">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <rect x="3" y="3" width="7" height="9" rx="1" />
+                  <rect x="14" y="3" width="7" height="5" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                  <rect x="3" y="16" width="7" height="5" rx="1" />
+                </svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+            </li>
+
+            <li
+              class="nav-item"
+              role="menuitem"
+              tabindex="0"
+              data-key="find-donor">
+              <span class="icon" aria-hidden="true">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
+              </span>
+              <span class="nav-label">Find a Donor</span>
+            </li>
+
+            <li
+              class="nav-item"
+              role="menuitem"
+              tabindex="0"
+              data-key="donor-list"
+              aria-haspopup="true"
+              aria-expanded="false">
+              <span class="icon" aria-hidden="true">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+                  <circle cx="12" cy="7" r="3" />
+                </svg>
+              </span>
+              <span class="nav-label">Donors</span>
+              <button
+                class="submenu-toggle"
+                aria-label="Toggle Donors submenu"
+                title="Toggle">
+                ▾
+              </button>
+
+              <div class="submenu" data-submenu>
+                <div
+                  class="nav-item"
+                  role="menuitem"
+                  tabindex="0"
+                  data-key="all-donors"
+                  style="padding-left: 0">
+                  <span class="icon" aria-hidden="true">👥</span>
+                  <span class="nav-label">All Donors</span>
+                </div>
+                <div
+                  class="nav-item"
+                  role="menuitem"
+                  tabindex="0"
+                  data-key="become-donor"
+                  style="padding-left: 0">
+                  <span class="icon" aria-hidden="true">➕</span>
+                  <span class="nav-label">Become a Donor</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="nav-item" role="menuitem" tabindex="0" data-key="camps">
+              <span class="icon" aria-hidden="true">📅</span>
+              <span class="nav-label">Camps</span>
+            </li>
+
+            <li
+              class="nav-item"
+              role="menuitem"
+              tabindex="0"
+              data-key="requests">
+              <span class="icon" aria-hidden="true">📨</span>
+              <span class="nav-label">Requests</span>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button
+            class="nav-item"
+            role="button"
+            tabindex="0"
+            id="profileBtn"
+            title="Profile">
+            <span class="icon">👤</span>
+            <span class="nav-label">Profile</span>
+          </button>
+          <button
+            class="nav-item"
+            role="button"
+            tabindex="0"
+            id="logoutBtn"
+            title="Logout">
+            <span class="icon">Logout</span>
+          </button>
+        </div>
+      </aside>
+    </div> -->
 
     <section
       id="overview"
@@ -67,9 +267,10 @@
         align-items: center;
         justify-content: center;
         gap: 300px;
-        padding: 80px 60px;
+        padding: 12px 20px;
         flex-wrap: wrap;
         border-radius: 40px;
+        margin-top: -10px;
         background-color: rgba(255, 226, 226, 0.5);
         /* backdrop-filter: blur(12px); */
       ">
@@ -187,7 +388,53 @@
         </div>
       </div>
     </section>
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-column about">
+          <h3>The Red Thread</h3>
+          <p>
+            We connect donors and recipients quickly and safely. Join our
+            community to help save lives — one donation at a time.
+          </p>
+        </div>
+
+        <div class="footer-column links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="login.html">Log In</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column contact">
+          <h4>Contact</h4>
+          <p>
+            Email:
+            <a href="mailto:help@theredthread.org">help@theredthread.org</a>
+          </p>
+          <p>Phone: <a href="tel:+1234567890">+91 23456 78901</a></p>
+          <p>Address: BMSCE, Bengaluru</p>
+        </div>
+
+        <!-- <div class="footer-column socials">
+          <h4>Follow Us</h4>
+          <p class="social-links">
+            <a href="#" aria-label="Twitter">Twitter</a> •
+            <a href="#" aria-label="Facebook">Facebook</a> •
+            <a href="#" aria-label="Instagram">Instagram</a>
+          </p>
+        </div> -->
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> The Red Thread — All rights reserved.</p>
+      </div>
+    </footer>
+
     <script>
+      // --- 1. Page Transitions ---
       function pageTransition(e) {
         e.preventDefault();
         document.body.classList.add("fade-out");
@@ -196,8 +443,8 @@
         }, 500);
       }
 
+      // --- 2. Navigation Button Highlighting ---
       const buttons = document.querySelectorAll(".nav-btn");
-
       buttons.forEach((btn) => {
         btn.addEventListener("click", function () {
           // remove red from all buttons
@@ -207,10 +454,11 @@
         });
       });
 
+      // --- 3. Feature Tabs Functionality ---
       document.addEventListener("DOMContentLoaded", () => {
-        // Feature tabs functionality
         const tabs = document.querySelectorAll(".tab");
         const tabContents = document.querySelectorAll(".tab-content");
+
         tabs.forEach((tab) => {
           tab.addEventListener("click", () => {
             tabs.forEach((item) => item.classList.remove("tab-active"));
@@ -222,6 +470,141 @@
                 content.classList.add("active");
               }
             });
+          });
+        });
+
+        // --- 4. NEW Sidebar Logic (Slide-in Drawer) ---
+        const sidebar = document.getElementById("sidebar");
+        const openBtn = document.getElementById("menuToggle"); // The Hamburger in the header
+        const closeBtn = document.getElementById("collapseBtn"); // The toggle button inside sidebar
+
+        // Create the overlay dynamically
+        const overlay = document.createElement("div");
+        overlay.className = "overlay";
+        document.body.appendChild(overlay);
+
+        // Accessibility helpers and focus trapping
+        let previousActiveEl = null;
+        let _trapListener = null;
+        const focusableSelector =
+          'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+        function openSidebar() {
+          if (!sidebar) return;
+          previousActiveEl = document.activeElement;
+          sidebar.classList.add("active");
+          overlay.classList.add("active");
+          document.body.style.overflow = "hidden";
+          // ARIA updates
+          sidebar.setAttribute("aria-hidden", "false");
+          overlay.setAttribute("aria-hidden", "false");
+          overlay.setAttribute("role", "presentation");
+          overlay.setAttribute("tabindex", "-1");
+          openBtn && openBtn.setAttribute("aria-expanded", "true");
+
+          // Focus first focusable element
+          const focusable = sidebar.querySelectorAll(focusableSelector);
+          if (focusable.length) focusable[0].focus();
+
+          // Trap focus inside sidebar
+          _trapListener = function (e) {
+            if (e.key !== "Tab") return;
+            const nodes = Array.from(
+              sidebar.querySelectorAll(focusableSelector)
+            ).filter((n) => !n.hasAttribute("disabled"));
+            if (!nodes.length) return;
+            const first = nodes[0];
+            const last = nodes[nodes.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+              }
+            } else {
+              if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          };
+          document.addEventListener("keydown", _trapListener, true);
+        }
+
+        function closeSidebar() {
+          if (!sidebar) return;
+          sidebar.classList.remove("active");
+          overlay.classList.remove("active");
+          document.body.style.overflow = "";
+          // ARIA updates
+          sidebar.setAttribute("aria-hidden", "true");
+          overlay.setAttribute("aria-hidden", "true");
+          openBtn && openBtn.setAttribute("aria-expanded", "false");
+
+          // remove focus trap
+          if (_trapListener) {
+            document.removeEventListener("keydown", _trapListener, true);
+            _trapListener = null;
+          }
+          // restore focus
+          try {
+            previousActiveEl && previousActiveEl.focus();
+          } catch (err) {}
+        }
+
+        // Event Listener: Open (Hamburger) — open the overlay drawer and show sidebar
+        if (openBtn) {
+          openBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openSidebar();
+          });
+        }
+
+        // Event Listener: Close (Button inside sidebar) — always close the drawer
+        if (closeBtn) {
+          closeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            closeSidebar();
+            openBtn && openBtn.focus();
+          });
+        }
+
+        // Event Listener: Close (Clicking outside/Overlay)
+        overlay.addEventListener("click", closeSidebar);
+
+        // Event Listener: Close (Pressing Escape key)
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && sidebar.classList.contains("active")) {
+            closeSidebar();
+          }
+        });
+
+        // --- 5. Submenu Logic (Donors Dropdown) ---
+        document
+          .querySelectorAll('.nav-item[aria-haspopup="true"]')
+          .forEach((item) => {
+            const toggleBtn = item.querySelector(".submenu-toggle");
+            const submenu = item.querySelector("[data-submenu]");
+            if (!toggleBtn || !submenu) return;
+
+            toggleBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const isOpen = submenu.classList.toggle("open");
+              item.setAttribute("aria-expanded", String(isOpen));
+
+              // Rotate arrow icon if exists
+              toggleBtn.style.transform = isOpen
+                ? "rotate(180deg)"
+                : "rotate(0deg)";
+            });
+          });
+
+        // --- 6. Active State for Menu Items ---
+        document.querySelectorAll(".nav-item[data-key]").forEach((it) => {
+          it.addEventListener("click", () => {
+            document
+              .querySelectorAll(".nav-item[data-key]")
+              .forEach((x) => x.removeAttribute("aria-current"));
+            it.setAttribute("aria-current", "page");
           });
         });
       });

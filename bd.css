@@ -164,6 +164,72 @@ body.fade-out {
   pointer-events: auto;
 }
 
+/* New animated hamburger styles (converted from provided SCSS mixins) */
+.menu.btn6 {
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  /* keep the hamburger visible above the sidebar by using fixed positioning */
+  position: fixed;
+  left: 18px; /* align near the left edge of the header */
+  top: 18px; /* vertically inside the header area */
+  z-index: 10030; /* above sidebar (10010) and collapse btn */
+}
+.menu.btn6:focus { outline: none; box-shadow: 0 0 0 4px rgba(230,57,70,0.14); }
+.menu.btn6 .icon {
+  width: 30px;
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+  position: relative;
+  transition: transform 0.35s ease, background 0.35s ease;
+}
+.menu.btn6 .icon::before,
+.menu.btn6 .icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 30px;
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+.menu.btn6 .icon::before { top: -10px; }
+.menu.btn6 .icon::after { top: 10px; }
+
+/* Open state: morph the three bars into a centered X and keep it visible */
+.menu.btn6.open .icon {
+  background: transparent; /* hide middle bar */
+  transition-duration: 0.35s;
+}
+.menu.btn6.open .icon::before,
+.menu.btn6.open .icon::after {
+  top: 0; /* center the pseudo bars */
+  transform: none; /* reset to set precise rotate below */
+  opacity: 1;
+}
+.menu.btn6.open .icon::before { transform: rotate(45deg); }
+.menu.btn6.open .icon::after  { transform: rotate(-45deg); }
+.menu.btn6.open .icon,
+.menu.btn6.open .icon::before,
+.menu.btn6.open .icon::after { background: #fff; }
+
+.menu.btn6:hover { background: rgba(255,255,255,0.06); }
+
+/* Tooltip adjustment for the fixed hamburger so it appears below the icon */
+.menu.btn6 .tooltip {
+  left: 18px; /* align with button */
+  top: 62px; /* place below the header area */
+  bottom: auto;
+}
+
 .header-title {
   font-size: 1.25rem; /* 20px */
   font-weight: 700;
@@ -215,6 +281,10 @@ body.fade-out {
 
 #overview{
   scroll-margin-top: 80px;
+}
+
+#features{
+  scroll-margin-top: 10px;
 }
 
 .features {
@@ -516,3 +586,49 @@ nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius
   opacity: 1;
   pointer-events: auto;
 }
+
+/* Collapse toggle: place it above the sidebar edge so it's not hidden */
+#collapseBtn {
+  /* place the collapse toggle inside the sidebar header (replaces any small hamburger image)
+     position it relative to the .brand container */
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  left: auto;
+  z-index: 10020; /* above sidebar content */
+  background: linear-gradient(180deg, #071028, #0b1220);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--muted);
+  padding: 8px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+}
+
+#collapseBtn:focus { outline: none; box-shadow: 0 0 0 4px rgba(230,57,70,0.12); }
+
+/* Rotate the icon when sidebar is collapsed to indicate the toggle direction */
+#collapseIcon {
+  transition: transform 220ms ease;
+}
+.sidebar.collapsed #collapseIcon {
+  transform: rotate(180deg);
+}
+
+/* When sidebar is collapsed we move the collapse button to match collapsed width */
+.sidebar.collapsed #collapseBtn {
+  /* when collapsed still keep inside header; no left calc needed */
+  right: 12px;
+}
+
+/* hide any leftover hamburger image inside the sidebar to avoid duplicate icons */
+.sidebar .ham-menu { display: none !important; }
+
+/* ensure .brand acts as positioning context for the absolute collapse button */
+.brand { position: relative; }
+
+/* Move the BD badge slightly to the right for visual spacing */
+.brand .logo { margin-left: 8px; margin-right: 6px; }

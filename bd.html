@@ -28,6 +28,8 @@
     <header class="header">
       <nav class="container navbar">
         <div class="nav-left">
+          <!-- Original hamburger button kept but commented out for reference -->
+          <!--
           <button
             id="menuToggle"
             class="hmbrg-menu"
@@ -37,6 +39,21 @@
             <img class="ham-menu" src="images/hamburger-menu.svg" alt="Menu" />
             <div class="tooltip">Menu</div>
           </button>
+          -->
+
+          <!-- Integrated new animated hamburger (based on provided `.menu.btn6` markup) -->
+          <div
+            id="menuToggle"
+            class="menu btn6 hmbrg-menu"
+            data-menu="6"
+            role="button"
+            aria-label="Open menu"
+            aria-controls="sidebar"
+            aria-expanded="false"
+            tabindex="0">
+            <div class="icon" aria-hidden="true"></div>
+            <div class="tooltip">Menu</div>
+          </div>
         </div>
 
         <div class="nav-right">
@@ -67,7 +84,7 @@
       </nav>
     </header>
 
-    <!-- <div class="app" id="appRoot">
+    <div class="app" id="appRoot">
       <aside id="sidebar" class="sidebar">
         <div class="brand" role="banner">
           <div
@@ -257,7 +274,7 @@
           </button>
         </div>
       </aside>
-    </div> -->
+    </div>
 
     <section
       id="overview"
@@ -270,7 +287,7 @@
         padding: 12px 20px;
         flex-wrap: wrap;
         border-radius: 40px;
-        margin-top: -10px;
+        margin-top: 70px;
         background-color: rgba(255, 226, 226, 0.5);
         /* backdrop-filter: blur(12px); */
       ">
@@ -501,6 +518,8 @@
           overlay.setAttribute("role", "presentation");
           overlay.setAttribute("tabindex", "-1");
           openBtn && openBtn.setAttribute("aria-expanded", "true");
+          // Visually mark the hamburger as open for the animated icon
+          openBtn && openBtn.classList.add("open");
 
           // Focus first focusable element
           const focusable = sidebar.querySelectorAll(focusableSelector);
@@ -539,6 +558,8 @@
           sidebar.setAttribute("aria-hidden", "true");
           overlay.setAttribute("aria-hidden", "true");
           openBtn && openBtn.setAttribute("aria-expanded", "false");
+          // Remove visual open state from animated icon
+          openBtn && openBtn.classList.remove("open");
 
           // remove focus trap
           if (_trapListener) {
@@ -551,11 +572,27 @@
           } catch (err) {}
         }
 
-        // Event Listener: Open (Hamburger) — open the overlay drawer and show sidebar
+        // Event Listener: Toggle (Hamburger) — open or close the sidebar
         if (openBtn) {
           openBtn.addEventListener("click", (e) => {
             e.stopPropagation();
-            openSidebar();
+            if (sidebar.classList.contains("active")) {
+              closeSidebar();
+            } else {
+              openSidebar();
+            }
+          });
+
+          // keyboard support: open/close on Enter or Space
+          openBtn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              if (sidebar.classList.contains("active")) {
+                closeSidebar();
+              } else {
+                openSidebar();
+              }
+            }
           });
         }
 

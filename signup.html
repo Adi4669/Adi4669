@@ -32,38 +32,56 @@
         <p style="font-size: 24px; text-align: center">
           Enter your details to sign up:
         </p>
-        <input
-          class="input"
-          placeholder="Enter Username"
-          name="username"
-          required />
-        <input
-          class="input"
-          type="password"
-          placeholder="Enter Password"
-          name="password"
-          required />
-        <input
-          class="input"
-          type="email"
-          placeholder="Enter Email"
-          name="email"
-          required />
-        <input
-          class="input"
-          type="text"
-          placeholder="Enter Phone Number"
-          name="phone"
-          required />
-        <label for="blood_group"></label>
-        <input
-          list="blood_groups"
-          class="input"
-          type="text"
-          name="blood_group"
-          id="blood_group"
-          placeholder="Enter Blood Group"
-          required />
+        <div class="input-wrapper">
+          <input
+            class="input"
+            id="username"
+            name="username"
+            placeholder=""
+            required />
+          <label for="username">Username</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            class="input"
+            id="password"
+            type="password"
+            name="password"
+            placeholder=""
+            required />
+          <label for="password">Password</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            class="input"
+            id="email"
+            type="email"
+            name="email"
+            placeholder=""
+            required />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            class="input"
+            id="phone"
+            type="text"
+            name="phone"
+            placeholder=""
+            required />
+          <label for="phone">Phone Number</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            list="blood_groups"
+            class="input"
+            type="text"
+            name="blood_group"
+            id="blood_group"
+            placeholder=""
+            required />
+          <label for="blood_group">Blood Group</label>
+        </div>
         <datalist id="blood_groups">
           <option value="A+"></option>
           <option value="A-"></option>
@@ -75,15 +93,17 @@
           <option value="O-"></option>
         </datalist>
 
-        <label for="city"></label>
-        <input
-          list="cities"
-          name="city"
-          id="city"
-          class="input"
-          type="text"
-          placeholder="Enter City"
-          required />
+        <div class="input-wrapper">
+          <input
+            list="cities"
+            name="city"
+            id="city"
+            class="input"
+            type="text"
+            placeholder=""
+            required />
+          <label for="city">City</label>
+        </div>
         <datalist id="cities">
           <option value="Bengaluru"></option>
           <option value="Ahmedabad"></option>

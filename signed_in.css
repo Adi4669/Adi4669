@@ -325,6 +325,7 @@ body.sidebar-open .header .login {
   color: #e63946;
   background-color: #ffffff;
   box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+  border-bottom: 4px solid #e63946;
 }
 /* 
 .tab.tab-active::after {

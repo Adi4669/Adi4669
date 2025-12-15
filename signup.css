@@ -124,18 +124,53 @@ body::before {
   transition: 0.2s;
 }
 
-.input {
-  display: block;
+.input-wrapper {
+  position: relative;
   width: 90%;
   max-width: 100%;
   margin: 20px;
+}
+
+.input {
+  display: block;
+  width: 100%;
   height: 40px;
   font-size: 16px;
-  padding: 8px 14px;
+  padding: 10px 14px 8px 14px;
   border-radius: 8px;
-  border: none;
+  border: 2px solid transparent;
   background-color: rgb(225,225,225);
   box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.input-wrapper label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.input:focus {
+  outline: none;
+  border-color: red;
+  background-color: rgb(235, 235, 235);
+}
+
+.input:focus + label,
+.input:not(:placeholder-shown) + label {
+  top: -10px;
+  transform: translateY(0);
+  font-size: 14px;
+  color: red;
+  font-weight: 600;
+  background-color: rgb(235, 235, 235);
+  padding: 0 4px;
 }
 
 

@@ -4,21 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght=400;600;700;800&display=swap"
+      rel="stylesheet" />
     <link rel="stylesheet" href="signed_in.css" />
   </head>
   <body>
+    <!-- floating hamburger moved out of header so it is not trapped by header stacking context -->
+    <button
+      id="menuToggle"
+      class="menu btn6"
+      aria-label="Toggle menu"
+      aria-controls="sidebar"
+      aria-expanded="false">
+      <div class="icon"></div>
+    </button>
     <header class="header">
       <nav class="container navbar">
-        <button
-          id="menuToggle"
-          class="hmbrg-menu"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false">
-          <img class="ham-menu" src="images/hamburger-menu.svg" />
-          <div class="tooltip">Menu</div>
-        </button>
-
         <div class="desktop-nav">
           <a
             href="#overview"
@@ -174,36 +176,225 @@
           </p>
         </div>
       </div>
+      <div id="future" class="tab-content feature-grid">
+        <div class="feature-card">
+          <h3>Real-time Location Sharing</h3>
+          <p>
+            Allow donors to share approximate live location during emergencies
+            for faster coordination.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Verified Donor Badges</h3>
+          <p>
+            Implement a verification workflow (ID or blood-test records) to
+            build trust and highlight verified donors.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Appointment Scheduling</h3>
+          <p>
+            Enable donors to book time slots at partner blood banks or donation
+            camps to reduce wait times.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Inventory & Bank Integration</h3>
+          <p>
+            Connect with blood bank inventories to display available blood types
+            and urgently needed units.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Push Notifications & SMS Fallback</h3>
+          <p>
+            Provide push alerts to donors with SMS fallback for critical
+            requests when app push fails.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Multi-language Support</h3>
+          <p>
+            Localize the app for regional languages to increase accessibility
+            and adoption.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Donation History & Analytics</h3>
+          <p>
+            Track donation records with detailed analytics showing impact
+            metrics and personal milestones.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Health Screening Integration</h3>
+          <p>
+            Pre-donation health screening forms and reminders to ensure donor
+            eligibility and safety.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Rewards & Gamification</h3>
+          <p>
+            Recognize donors with badges, certificates, and leaderboards to
+            encourage regular donations.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Emergency Alert System</h3>
+          <p>
+            Broadcast urgent blood requirements to all matching donors in
+            critical situations.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Social Media Integration</h3>
+          <p>
+            Share donation achievements and requests on social platforms to
+            expand reach.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>AI-Powered Matching</h3>
+          <p>
+            Use machine learning to predict and suggest optimal donor-recipient
+            matches based on various factors.
+          </p>
+        </div>
+      </div>
+      <!-- Donation Stats: summary metrics shown below the MVP -->
+      <div class="stats-section">
+        <h3 class="stats-title">Donation Stats</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path
+                  d="M12 2s5 4.5 5 8.5A5 5 0 0 1 7 10.5C7 6.5 12 2 12 2z"
+                  fill="white" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="12482">0</div>
+            <div class="stat-label">Total Donations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <circle cx="12" cy="7" r="3" fill="white" />
+                <path
+                  d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"
+                  fill="white" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="4128">0</div>
+            <div class="stat-label">Active Donors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="white" />
+                <path
+                  d="M8 12l2.5 2.5L16 9"
+                  stroke="#d32f2f"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="9234">0</div>
+            <div class="stat-label">Requests Fulfilled</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <rect x="3" y="7" width="18" height="13" rx="2" fill="white" />
+                <path
+                  d="M7 7v-2h10v2"
+                  stroke="#b71c1c"
+                  stroke-width="1.2"
+                  fill="none" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="312">0</div>
+            <div class="stat-label">Blood Banks Linked</div>
+          </div>
+        </div>
+      </div>
     </section>
     <div class="app" id="appRoot">
       <aside id="sidebar" class="sidebar">
         <div class="brand" role="banner">
-          <div class="logo" aria-hidden="true">BD</div>
-          <div style="display: flex; flex-direction: column; min-width: 0">
-            <div class="title">Blood Donation</div>
-            <div class="muted desc" style="font-size: 12px">
-              Save lives — one drop at a time
+          <div class="brand-header" style="width: 100%">
+            <div
+              class="brand-top"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                justify-content: flex-end;
+                width: 100%;
+              ">
+              <div
+                class="brand-text"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-end;
+                ">
+                <div
+                  class="title"
+                  style="color: var(--text); font-weight: 700; font-size: 16px">
+                  Blood Donation
+                </div>
+                <div
+                  class="muted desc"
+                  style="font-size: 12px; color: var(--muted)">
+                  Save lives — one drop at a time
+                </div>
+              </div>
+              <div
+                class="logo"
+                aria-hidden="true"
+                style="
+                  background: #e63946;
+                  color: #fff;
+                  width: 44px;
+                  height: 44px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 10px;
+                  font-weight: 700;
+                ">
+                BD
+              </div>
             </div>
           </div>
-
-          <button
-            class="toggle-btn"
-            id="collapseBtn"
-            aria-expanded="true"
-            aria-controls="sidebar"
-            title="Collapse menu">
-            <!-- simple hamburger / chevron icon -->
-            <svg
-              id="collapseIcon"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2">
-              <path d="M3 12h18M3 6h18M3 18h18"></path>
-            </svg>
-          </button>
         </div>
 
         <nav>
@@ -340,6 +531,63 @@
       </aside>
     </div>
 
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <div class="cta-text">
+          <h2>Every Drop Counts</h2>
+          <p>
+            Join thousands of heroes who are making a difference. Your single
+            donation can save up to three lives.
+          </p>
+          <div class="cta-buttons">
+            <a href="signup.html" class="cta-btn primary">Become a Donor</a>
+            <a href="login.html" class="cta-btn secondary">Request Blood</a>
+          </div>
+        </div>
+        <div class="cta-image">
+          <div class="blood-types-grid">
+            <div class="blood-type-badge" data-blood-type="A+">A+</div>
+            <div class="blood-type-badge" data-blood-type="B+">B+</div>
+            <div class="blood-type-badge" data-blood-type="AB+">AB+</div>
+            <div class="blood-type-badge" data-blood-type="O+">O+</div>
+            <div class="blood-type-badge" data-blood-type="A-">A-</div>
+            <div class="blood-type-badge" data-blood-type="B-">B-</div>
+            <div class="blood-type-badge" data-blood-type="AB-">AB-</div>
+            <div class="blood-type-badge" data-blood-type="O-">O-</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blood Type Modal -->
+    <div id="bloodTypeModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <div class="modal-header">
+          <h2 id="modalBloodType">A+</h2>
+        </div>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h3>Overview</h3>
+            <p id="modalOverview"></p>
+          </div>
+          <div class="modal-section">
+            <h3>Can Donate To</h3>
+            <p id="modalCanDonateTo"></p>
+          </div>
+          <div class="modal-section">
+            <h3>Can Receive From</h3>
+            <p id="modalCanReceiveFrom"></p>
+          </div>
+          <div class="modal-section">
+            <h3>Interesting Facts</h3>
+            <ul id="modalFacts"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <div class="footer-container">
         <div class="footer-column about">
@@ -398,12 +646,15 @@
       // --- 2. Navigation Button Highlighting ---
       const buttons = document.querySelectorAll(".nav-btn");
       buttons.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          // remove red from all buttons
-          buttons.forEach((b) => b.classList.remove("red"));
-          // add red only to clicked button
-          btn.classList.add("red");
-        });
+        const handleButtonClick = function () {
+          // remove tab-active from all buttons
+          buttons.forEach((b) => b.classList.remove("tab-active"));
+          // add tab-active only to clicked button
+          btn.classList.add("tab-active");
+        };
+
+        btn.addEventListener("click", handleButtonClick);
+        btn.addEventListener("touchstart", handleButtonClick); // For mobile touch
       });
 
       // --- 3. Feature Tabs Functionality ---
@@ -412,7 +663,7 @@
         const tabContents = document.querySelectorAll(".tab-content");
 
         tabs.forEach((tab) => {
-          tab.addEventListener("click", () => {
+          const handleTabClick = () => {
             tabs.forEach((item) => item.classList.remove("tab-active"));
             tab.classList.add("tab-active");
             const targetId = tab.getAttribute("data-tab");
@@ -422,13 +673,15 @@
                 content.classList.add("active");
               }
             });
-          });
+          };
+
+          tab.addEventListener("click", handleTabClick);
+          tab.addEventListener("touchstart", handleTabClick); // For mobile touch
         });
 
         // --- 4. NEW Sidebar Logic (Slide-in Drawer) ---
         const sidebar = document.getElementById("sidebar");
-        const openBtn = document.getElementById("menuToggle"); // The Hamburger in the header
-        const closeBtn = document.getElementById("collapseBtn"); // The toggle button inside sidebar
+        const openBtn = document.getElementById("menuToggle"); // The Hamburger in the header (now .menu.btn6)
 
         // Create the overlay dynamically
         const overlay = document.createElement("div");
@@ -447,6 +700,10 @@
           sidebar.classList.add("active");
           overlay.classList.add("active");
           document.body.style.overflow = "hidden";
+          // mark body so header nav can hide and only the floating menu remains visible
+          document.body.classList.add("sidebar-open");
+          // reflect state on the menu button for animation
+          openBtn && openBtn.classList.add("open");
           // ARIA updates
           sidebar.setAttribute("aria-hidden", "false");
           overlay.setAttribute("aria-hidden", "false");
@@ -491,6 +748,9 @@
           sidebar.setAttribute("aria-hidden", "true");
           overlay.setAttribute("aria-hidden", "true");
           openBtn && openBtn.setAttribute("aria-expanded", "false");
+          // remove header hiding state and menu button open class
+          document.body.classList.remove("sidebar-open");
+          openBtn && openBtn.classList.remove("open");
 
           // remove focus trap
           if (_trapListener) {
@@ -503,20 +763,26 @@
           } catch (err) {}
         }
 
-        // Event Listener: Open (Hamburger) — open the overlay drawer and show sidebar
+        // Event Listener: Toggle (Hamburger) — open/close the drawer and animate the button
         if (openBtn) {
-          openBtn.addEventListener("click", (e) => {
+          const toggleSidebar = (e) => {
             e.stopPropagation();
-            openSidebar();
-          });
-        }
+            if (sidebar.classList.contains("active")) {
+              closeSidebar();
+            } else {
+              openSidebar();
+            }
+          };
 
-        // Event Listener: Close (Button inside sidebar) — always close the drawer
-        if (closeBtn) {
-          closeBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            closeSidebar();
-            openBtn && openBtn.focus();
+          openBtn.addEventListener("click", toggleSidebar);
+          openBtn.addEventListener("touchstart", toggleSidebar); // For mobile touch
+
+          // keyboard support: open/close on Enter or Space
+          openBtn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggleSidebar(e);
+            }
           });
         }
 
@@ -558,6 +824,204 @@
               .forEach((x) => x.removeAttribute("aria-current"));
             it.setAttribute("aria-current", "page");
           });
+        });
+
+        // Set current year in footer
+        const yearElement = document.getElementById("year");
+        if (yearElement) {
+          yearElement.textContent = new Date().getFullYear();
+        }
+
+        // --- Donation Stats: animate counters when visible ---
+        const statElements = document.querySelectorAll(".stat-value");
+        if ("IntersectionObserver" in window && statElements.length) {
+          const obs = new IntersectionObserver(
+            (entries, observer) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target =
+                  parseInt(el.getAttribute("data-target"), 10) || 0;
+                const duration = 1400;
+                const start = performance.now();
+
+                const tick = (now) => {
+                  const progress = Math.min((now - start) / duration, 1);
+                  const value = Math.floor(progress * target);
+                  el.textContent = value.toLocaleString();
+                  if (progress < 1) requestAnimationFrame(tick);
+                  else el.textContent = target.toLocaleString();
+                };
+
+                requestAnimationFrame(tick);
+                observer.unobserve(el);
+              });
+            },
+            { threshold: 0.4 }
+          );
+
+          statElements.forEach((s) => obs.observe(s));
+        } else {
+          // Fallback: just populate values
+          statElements.forEach((el) => {
+            const t = el.getAttribute("data-target");
+            if (t) el.textContent = parseInt(t, 10).toLocaleString();
+          });
+        }
+
+        // --- Blood Type Modal Functionality ---
+        const modal = document.getElementById("bloodTypeModal");
+        const modalClose = document.querySelector(".modal-close");
+        const bloodTypeBadges = document.querySelectorAll(".blood-type-badge");
+
+        const bloodTypeData = {
+          "A+": {
+            overview:
+              "A+ is the second most common blood type, found in approximately 35% of the population. It contains A antigens on red blood cells and Rh factor.",
+            canDonateTo: "A+, AB+",
+            canReceiveFrom: "A+, A-, O+, O-",
+            facts: [
+              "A+ blood type is in high demand for transfusions",
+              "People with A+ can donate plasma to all blood types",
+              "About 1 in 3 people have A+ blood",
+              "A+ donors are universal platelet donors",
+            ],
+          },
+          "A-": {
+            overview:
+              "A- is a relatively rare blood type, found in about 6% of the population. It lacks the Rh factor, making it valuable for emergency transfusions.",
+            canDonateTo: "A+, A-, AB+, AB-",
+            canReceiveFrom: "A-, O-",
+            facts: [
+              "A- is the second most rare blood type",
+              "Critical for patients with A- or AB- blood types",
+              "Can donate red blood cells to both Rh+ and Rh- recipients",
+              "Only 6% of the population has A- blood",
+            ],
+          },
+          "B+": {
+            overview:
+              "B+ blood type is found in about 8% of the population. It contains B antigens on red blood cells along with the Rh factor.",
+            canDonateTo: "B+, AB+",
+            canReceiveFrom: "B+, B-, O+, O-",
+            facts: [
+              "B+ is less common than A+ or O+",
+              "B+ recipients can receive from 4 different blood types",
+              "Important for diverse ethnic populations",
+              "Can donate plasma to B and AB blood types",
+            ],
+          },
+          "B-": {
+            overview:
+              "B- is a rare blood type, present in only 2% of the population. It lacks the Rh factor and contains B antigens.",
+            canDonateTo: "B+, B-, AB+, AB-",
+            canReceiveFrom: "B-, O-",
+            facts: [
+              "One of the rarest blood types",
+              "Critical for patients with B- or AB- blood",
+              "B- donors are always in high demand",
+              "Only 2 out of 100 people have B- blood",
+            ],
+          },
+          "AB+": {
+            overview:
+              'AB+ is known as the "universal recipient" because it can receive blood from all blood types. Found in about 3% of the population.',
+            canDonateTo: "AB+ only",
+            canReceiveFrom: "All blood types (Universal Recipient)",
+            facts: [
+              "AB+ is the universal recipient for red blood cells",
+              "Can receive blood from any blood type in emergencies",
+              "AB+ plasma is universal and can be given to anyone",
+              "Only 3% of the population has AB+ blood",
+            ],
+          },
+          "AB-": {
+            overview:
+              "AB- is the rarest blood type, found in less than 1% of the population. It can receive from all negative blood types.",
+            canDonateTo: "AB+, AB-",
+            canReceiveFrom: "AB-, A-, B-, O-",
+            facts: [
+              "The rarest blood type in the world",
+              "AB- plasma is universal for plasma transfusions",
+              "Less than 1% of people have AB- blood",
+              "Extremely valuable for specific medical procedures",
+            ],
+          },
+          "O+": {
+            overview:
+              "O+ is the most common blood type, found in about 38% of the population. It contains no A or B antigens but has the Rh factor.",
+            canDonateTo: "O+, A+, B+, AB+",
+            canReceiveFrom: "O+, O-",
+            facts: [
+              "Most common blood type worldwide",
+              "O+ can donate to all positive blood types",
+              "Always in high demand for transfusions",
+              "About 1 in 3 people have O+ blood",
+            ],
+          },
+          "O-": {
+            overview:
+              'O- is the "universal donor" for red blood cells, usable by any blood type. Found in about 7% of the population.',
+            canDonateTo: "All blood types (Universal Donor)",
+            canReceiveFrom: "O- only",
+            facts: [
+              "Universal donor - can give to anyone",
+              "Most valuable blood type in emergencies",
+              "O- donors can only receive from O- donors",
+              "Often used in trauma situations when blood type is unknown",
+            ],
+          },
+        };
+
+        // Add click event to blood type badges
+        bloodTypeBadges.forEach((badge) => {
+          badge.style.cursor = "pointer";
+          badge.addEventListener("click", function () {
+            const bloodType = this.getAttribute("data-blood-type");
+            const data = bloodTypeData[bloodType];
+
+            if (data) {
+              document.getElementById("modalBloodType").textContent = bloodType;
+              document.getElementById("modalOverview").textContent =
+                data.overview;
+              document.getElementById("modalCanDonateTo").textContent =
+                data.canDonateTo;
+              document.getElementById("modalCanReceiveFrom").textContent =
+                data.canReceiveFrom;
+
+              const factsList = document.getElementById("modalFacts");
+              factsList.innerHTML = "";
+              data.facts.forEach((fact) => {
+                const li = document.createElement("li");
+                li.textContent = fact;
+                factsList.appendChild(li);
+              });
+
+              modal.style.display = "block";
+              setTimeout(() => modal.classList.add("show"), 10);
+            }
+          });
+        });
+
+        // Close modal functionality
+        modalClose.addEventListener("click", function () {
+          modal.classList.remove("show");
+          setTimeout(() => (modal.style.display = "none"), 300);
+        });
+
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.classList.remove("show");
+            setTimeout(() => (modal.style.display = "none"), 300);
+          }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && modal.style.display === "block") {
+            modal.classList.remove("show");
+            setTimeout(() => (modal.style.display = "none"), 300);
+          }
         });
       });
     </script>

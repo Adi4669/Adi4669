@@ -4,57 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blood_Donation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="bd.css" />
   </head>
   <body>
-    <!-- <div class="header">
-      <div class="l-sec">
-        <div class="hmbrg-menu">
-          <img class="ham-menu" src="images/hamburger-menu.svg" alt="" />
-          <div class="tooltip">Menu</div>
-        </div> -->
-    <!-- <img
-          class="logo"
-          src="images/Gemini_Generated_Image_l1fp5l1fp5l1fp5l.png"
-          alt="" /> -->
-    <!-- </div>
-      <div class="m-sec"></div>
-      <div class="r-sec">
-        <button class="want">Want Blood</button>
-        <button class="donate">Want to Donate Blood</button>
-        <a href="login.html" class="login" target="_blank">Log-in</a>
-      </div>
-    </div> -->
+    <!-- Floating hamburger button (moved out of header so it sits above overlay/sidebar) -->
+    <button
+      id="menuToggle"
+      class="menu btn6"
+      aria-label="Open menu"
+      aria-controls="sidebar"
+      aria-expanded="false">
+      <div class="icon" aria-hidden="true"></div>
+    </button>
+
     <header class="header">
       <nav class="container navbar">
         <div class="nav-left">
-          <!-- Original hamburger button kept but commented out for reference -->
-          <!--
-          <button
-            id="menuToggle"
-            class="hmbrg-menu"
-            aria-label="Open menu"
-            aria-controls="sidebar"
-            aria-expanded="false">
-            <img class="ham-menu" src="images/hamburger-menu.svg" alt="Menu" />
-            <div class="tooltip">Menu</div>
-          </button>
-          -->
-
-          <!-- Integrated new animated hamburger (based on provided `.menu.btn6` markup) -->
-          <div
-            id="menuToggle"
-            class="menu btn6 hmbrg-menu"
-            data-menu="6"
-            role="button"
-            aria-label="Open menu"
-            aria-controls="sidebar"
-            aria-expanded="false"
-            tabindex="0">
-            <div class="icon" aria-hidden="true"></div>
-            <div class="tooltip">Menu</div>
-          </div>
-        </div>
 
         <div class="nav-right">
           <div class="desktop-nav">
@@ -78,7 +44,7 @@
             >
             <a href="login.html" onclick="pageTransition(event)" class="login"
               >Log-in</a
-            >
+            >.
           </div>
         </div>
       </nav>
@@ -87,58 +53,13 @@
     <div class="app" id="appRoot">
       <aside id="sidebar" class="sidebar">
         <div class="brand" role="banner">
-          <div
-            class="brand-header"
-            style="display: flex; align-items: center; gap: 12px; width: 100%">
-            <div
-              class="logo"
-              aria-hidden="true"
-              style="
-                background: #e63946;
-                color: #fff;
-                width: 44px;
-                height: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 10px;
-                font-weight: 700;
-              ">
-              BD
-            </div>
-            <div style="display: flex; flex-direction: column; min-width: 0">
-              <div class="title" style="color: var(--text); font-weight: 700">
-                Blood Donation
+          <div class="brand-header" style="width:100%">
+            <div class="brand-top" style="display:flex; align-items:center; gap:12px; justify-content:flex-end; width:100%">
+              <div class="brand-text" style="display:flex; flex-direction:column; align-items:flex-end;">
+                <div class="title" style="color: var(--text); font-weight: 700; font-size:16px">Blood Donation</div>
+                <div class="muted desc" style="font-size: 12px; color: var(--muted)">Save lives — one drop at a time</div>
               </div>
-              <div
-                class="muted desc"
-                style="font-size: 12px; color: var(--muted)">
-                Save lives — one drop at a time
-              </div>
-            </div>
-            <div style="margin-left: auto">
-              <button
-                class="toggle-btn"
-                id="collapseBtn"
-                aria-expanded="true"
-                aria-controls="sidebar"
-                title="Collapse menu"
-                style="
-                  background: transparent;
-                  border: none;
-                  color: var(--muted);
-                ">
-                <svg
-                  id="collapseIcon"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2">
-                  <path d="M3 12h18M3 6h18M3 18h18"></path>
-                </svg>
-              </button>
+              <div class="logo" aria-hidden="true" style="background: #e63946; color: #fff; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 700;">BD</div>
             </div>
           </div>
         </div>
@@ -287,7 +208,7 @@
         padding: 12px 20px;
         flex-wrap: wrap;
         border-radius: 40px;
-        margin-top: 70px;
+        margin-top: 12px;
         background-color: rgba(255, 226, 226, 0.5);
         /* backdrop-filter: blur(12px); */
       ">
@@ -323,6 +244,56 @@
             gap between donors and those in urgent need. Explore the features,
             technology, and development plan below.
           </p>
+        </div>
+      </div>
+      <div id="future" class="tab-content feature-grid">
+        <div class="feature-card">
+          <h3>Real-time Location Sharing</h3>
+          <p>Allow donors to share approximate live location during emergencies for faster coordination.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Verified Donor Badges</h3>
+          <p>Implement a verification workflow (ID or blood-test records) to build trust and highlight verified donors.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Appointment Scheduling</h3>
+          <p>Enable donors to book time slots at partner blood banks or donation camps to reduce wait times.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Inventory & Bank Integration</h3>
+          <p>Connect with blood bank inventories to display available blood types and urgently needed units.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Push Notifications & SMS Fallback</h3>
+          <p>Provide push alerts to donors with SMS fallback for critical requests when app push fails.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Multi-language Support</h3>
+          <p>Localize the app for regional languages to increase accessibility and adoption.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Donation History & Analytics</h3>
+          <p>Track donation records with detailed analytics showing impact metrics and personal milestones.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Health Screening Integration</h3>
+          <p>Pre-donation health screening forms and reminders to ensure donor eligibility and safety.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Rewards & Gamification</h3>
+          <p>Recognize donors with badges, certificates, and leaderboards to encourage regular donations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Emergency Alert System</h3>
+          <p>Broadcast urgent blood requirements to all matching donors in critical situations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Social Media Integration</h3>
+          <p>Share donation achievements and requests on social platforms to expand reach.</p>
+        </div>
+        <div class="feature-card">
+          <h3>AI-Powered Matching</h3>
+          <p>Use machine learning to predict and suggest optimal donor-recipient matches based on various factors.</p>
         </div>
       </div>
 
@@ -404,6 +375,51 @@
           </p>
         </div>
       </div>
+      <!-- Donation Stats: summary metrics shown below the MVP -->
+      <div class="stats-section">
+        <h3 class="stats-title">Donation Stats</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2s5 4.5 5 8.5A5 5 0 0 1 7 10.5C7 6.5 12 2 12 2z" fill="white"/>
+              </svg>
+            </div>
+            <div class="stat-value" data-target="12482">0</div>
+            <div class="stat-label">Total Donations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="7" r="3" fill="white" />
+                <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" fill="white" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="4128">0</div>
+            <div class="stat-label">Active Donors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="white" />
+                <path d="M8 12l2.5 2.5L16 9" stroke="#d32f2f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="9234">0</div>
+            <div class="stat-label">Requests Fulfilled</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="3" y="7" width="18" height="13" rx="2" fill="white" />
+                <path d="M7 7v-2h10v2" stroke="#b71c1c" stroke-width="1.2" fill="none" />
+              </svg>
+            </div>
+            <div class="stat-value" data-target="312">0</div>
+            <div class="stat-label">Blood Banks Linked</div>
+          </div>
+        </div>
+      </div>
     </section>
     <footer class="site-footer">
       <div class="footer-container">
@@ -463,12 +479,15 @@
       // --- 2. Navigation Button Highlighting ---
       const buttons = document.querySelectorAll(".nav-btn");
       buttons.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          // remove red from all buttons
-          buttons.forEach((b) => b.classList.remove("red"));
-          // add red only to clicked button
-          btn.classList.add("red");
-        });
+        const handleButtonClick = function () {
+          // remove tab-active from all buttons
+          buttons.forEach((b) => b.classList.remove("tab-active"));
+          // add tab-active only to clicked button
+          btn.classList.add("tab-active");
+        };
+        
+        btn.addEventListener("click", handleButtonClick);
+        btn.addEventListener("touchstart", handleButtonClick); // For mobile touch
       });
 
       // --- 3. Feature Tabs Functionality ---
@@ -477,7 +496,7 @@
         const tabContents = document.querySelectorAll(".tab-content");
 
         tabs.forEach((tab) => {
-          tab.addEventListener("click", () => {
+          const handleTabClick = () => {
             tabs.forEach((item) => item.classList.remove("tab-active"));
             tab.classList.add("tab-active");
             const targetId = tab.getAttribute("data-tab");
@@ -487,13 +506,15 @@
                 content.classList.add("active");
               }
             });
-          });
+          };
+          
+          tab.addEventListener("click", handleTabClick);
+          tab.addEventListener("touchstart", handleTabClick); // For mobile touch
         });
 
         // --- 4. NEW Sidebar Logic (Slide-in Drawer) ---
         const sidebar = document.getElementById("sidebar");
         const openBtn = document.getElementById("menuToggle"); // The Hamburger in the header
-        const closeBtn = document.getElementById("collapseBtn"); // The toggle button inside sidebar
 
         // Create the overlay dynamically
         const overlay = document.createElement("div");
@@ -512,6 +533,8 @@
           sidebar.classList.add("active");
           overlay.classList.add("active");
           document.body.style.overflow = "hidden";
+          // also add a body-level state so header nav can hide while sidebar is open
+          document.body.classList.add("sidebar-open");
           // ARIA updates
           sidebar.setAttribute("aria-hidden", "false");
           overlay.setAttribute("aria-hidden", "false");
@@ -554,6 +577,7 @@
           sidebar.classList.remove("active");
           overlay.classList.remove("active");
           document.body.style.overflow = "";
+          document.body.classList.remove("sidebar-open");
           // ARIA updates
           sidebar.setAttribute("aria-hidden", "true");
           overlay.setAttribute("aria-hidden", "true");
@@ -574,34 +598,24 @@
 
         // Event Listener: Toggle (Hamburger) — open or close the sidebar
         if (openBtn) {
-          openBtn.addEventListener("click", (e) => {
+          const toggleSidebar = (e) => {
             e.stopPropagation();
             if (sidebar.classList.contains("active")) {
               closeSidebar();
             } else {
               openSidebar();
             }
-          });
+          };
+          
+          openBtn.addEventListener("click", toggleSidebar);
+          openBtn.addEventListener("touchstart", toggleSidebar); // For mobile touch
 
           // keyboard support: open/close on Enter or Space
           openBtn.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-              if (sidebar.classList.contains("active")) {
-                closeSidebar();
-              } else {
-                openSidebar();
-              }
+              toggleSidebar(e);
             }
-          });
-        }
-
-        // Event Listener: Close (Button inside sidebar) — always close the drawer
-        if (closeBtn) {
-          closeBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            closeSidebar();
-            openBtn && openBtn.focus();
           });
         }
 
@@ -635,7 +649,7 @@
             });
           });
 
-        // --- 6. Active State for Menu Items ---
+      // --- 6. Active State for Menu Items ---
         document.querySelectorAll(".nav-item[data-key]").forEach((it) => {
           it.addEventListener("click", () => {
             document
@@ -644,6 +658,42 @@
             it.setAttribute("aria-current", "page");
           });
         });
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- Donation Stats: animate counters when visible ---
+        const statElements = document.querySelectorAll('.stat-value');
+        if ('IntersectionObserver' in window && statElements.length) {
+          const obs = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              const el = entry.target;
+              const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+              const duration = 1400;
+              const start = performance.now();
+
+              const tick = (now) => {
+                const progress = Math.min((now - start) / duration, 1);
+                const value = Math.floor(progress * target);
+                el.textContent = value.toLocaleString();
+                if (progress < 1) requestAnimationFrame(tick);
+                else el.textContent = target.toLocaleString();
+              };
+
+              requestAnimationFrame(tick);
+              observer.unobserve(el);
+            });
+          }, { threshold: 0.4 });
+
+          statElements.forEach(s => observer.observe ? obs.observe(s) : null);
+        } else {
+          // Fallback: just populate values
+          statElements.forEach(el => {
+            const t = el.getAttribute('data-target');
+            if (t) el.textContent = parseInt(t,10).toLocaleString();
+          });
+        }
       });
     </script>
   </body>

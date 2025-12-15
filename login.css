@@ -121,43 +121,7 @@ body::before {
   transition: 0.2s;
 }
 
-.ham-menu {
-  height: 30px;
-  margin-left: 30px;
-  cursor: pointer;
-  padding: 6px;
-}
-
-.ham-menu:hover {
-  /* box-shadow: 5px 5px 10px black; */
-  background-color: rgb(255, 60, 60);
-  transition: 0.25s;
-  border-radius: 50%;
-}
-
-.hmbrg-menu {
-  position: relative;
-  border: none;
-}
-
-.hmbrg-menu .tooltip {
-  font-family:Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  position: absolute;
-  background-color: rgb(157, 157, 157);
-  color: rgb(255, 255, 255);
-  border-radius: 4px;
-  left: 24px;
-  bottom: -40px;
-  padding: 6px 10px;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.hmbrg-menu:hover .tooltip{
-  opacity: 1;
-  transition: 0.6s;
-}
+/* old ham-menu rules removed (using .menu.btn6 instead) */
 
 .login-grid {
   text-align: center;

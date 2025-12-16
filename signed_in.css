@@ -161,9 +161,10 @@ body.sidebar-open .header .header-title,
 body.sidebar-open .header .nav-link,
 body.sidebar-open .header .want,
 body.sidebar-open .header .donate,
-body.sidebar-open .header .login {
+body.sidebar-open .header .login,
+body.sidebar-open .header .profile-btn {
   display: none !important;
-}
+} 
 
 /* Tooltip: hidden by default, appears on hover or keyboard focus */
 .menu.btn6 .tooltip {
@@ -222,7 +223,7 @@ body.sidebar-open .header .login {
   transform: scale(1.05);
 }
 
-.want, .donate, .login {
+.want, .donate, .login, .profile-btn {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 600;
   font-size: 15px;
@@ -235,15 +236,81 @@ body.sidebar-open .header .login {
   background-color: #F3F4F6;
   color: #1F1F1F;
   transition: all 0.3s ease;
+} 
+
+.login:hover{
+  background-color: #524bb4; 
+  color: white;
+  box-shadow: 0 8px 20px rgba(230,57,70,0.45);
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.profile-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+}
+.profile-svg{
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.profile-btn:hover{
+  background-color: #524bb4; 
+  color: white;
+  box-shadow: 0 8px 20px rgba(230,57,70,0.45);
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
-.want:hover, .donate:hover {
+/* .want:hover {
   background-color: #E63946; 
   color: white;
   box-shadow: 0 8px 20px rgba(230,57,70,0.45);
   cursor: pointer;
   transform: scale(1.05);
 }
+.donate:hover{
+  background-color: #E63946; 
+  color: white;
+  box-shadow: 0 8px 20px rgba(230,57,70,0.45);
+  cursor: pointer;
+  transform: scale(1.05);
+} */
+
+/* Enhanced CTA styles */
+.profile-cta{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-weight: 700;
+}
+.profile-cta .btn-icon{ width:16px; height:16px; display:block; opacity:0.95 }
+
+/* Color accents for want/donate */
+.want.profile-cta{ background: linear-gradient(90deg,#d42020,#e63946); box-shadow: 0 6px 20px rgba(230,57,70,0.18); }
+.donate.profile-cta{ background: linear-gradient(90deg,#2bb673,#1db954); box-shadow: 0 6px 20px rgba(45,160,120,0.18); }
+.profile-cta:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.12); cursor:pointer; }
+.want.profile-cta:hover{background: linear-gradient(90deg,#d42020,#e2535f); box-shadow: 0 6px 20px rgba(230,57,70,0.18); transition: all 0.3s ease;}
+.donate.profile-cta:hover{background: linear-gradient(90deg,#2bb673,#2d9c54); box-shadow: 0 6px 20px rgba(45,160,120,0.18); transition: all 0.3s ease;}
+
+/* CTA secondary button style (used in CTA section) */
+.cta-btn.secondary{ background: linear-gradient(90deg,#d42020,#e63946); color: white; border-radius: 8px; padding: 10px 14px; }
+
+/* Modal form layout */
+.modal form{ display:flex; flex-direction:column; gap:12px; }
+.modal form input, .modal form select, .modal form textarea{ width:100%; padding:10px; border-radius:6px; border:1px solid #e6e6e6; background:#fff; color:#222; }
+.modal .form-row{ display:flex; gap:10px; }
+.modal .form-row > *{ flex:1 }
+
+/* Toast */
+.toast{ position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 10px 16px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; z-index: 20000; }
+.toast.show{ opacity: 1; transform: translateX(-50%) translateY(-6px); pointer-events: auto; }
 
 .login:hover{
   background-color: #524bb4; 

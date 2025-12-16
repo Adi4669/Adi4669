@@ -34,15 +34,27 @@
             onclick="location.href='#features'"
             >Features</a
           >
-          <a href="login.html" onclick="pageTransition(event)" class="want"
-            >Want Blood</a
-          >
-          <a href="login.html" onclick="pageTransition(event)" class="donate"
-            >Donate Blood</a
-          >
-          <a href="login.html" onclick="pageTransition(event)" class="login"
-            >Log-in</a
-          >
+          <button id="headerWantBtn" class="want profile-cta" title="Request blood" aria-label="Request blood">
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2C8 2 4 4 4 8c0 5 8 12 8 12s8-7 8-12c0-4-4-6-8-6z" fill="currentColor" />
+              <circle cx="12" cy="8" r="2.2" fill="white" />
+            </svg>
+            <span>Want Blood</span>
+          </button>
+          <button id="headerDonateBtn" class="donate profile-cta" title="Offer to donate" aria-label="Offer to donate">
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 21s8-5.5 8-11c0-3.866-3.134-7-7-7S6 6.134 6 10c0 5.5 6 11 6 11z" fill="currentColor" />
+              <path d="M9 10h6" stroke="white" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+            <span>Donate Blood</span>
+          </button>
+          <button id="headerProfileBtn" class="profile-btn" title="Open profile" aria-label="Open profile" aria-haspopup="dialog">
+            <svg class="profile-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" fill="currentColor" />
+              <path d="M4 20c0-2.761 4.477-5 8-5s8 2.239 8 5v1H4v-1z" fill="currentColor" />
+            </svg>
+            <span>Profile</span>
+          </button>
           <!-- <a href="#tech-stack" class="nav-link">Tech Stack</a>
           <a href="#roadmap" class="nav-link">Roadmap</a> -->
         </div>
@@ -263,7 +275,7 @@
         </div>
       </div>
       <!-- Donation Stats: summary metrics shown below the MVP -->
-      <div class="stats-section" style="margin-top: 100px">
+      <div id="stats" class="stats-section" style="margin-top: 100px">
         <h3 class="stats-title">Donation Stats</h3>
         <div class="stats-grid">
           <div class="stat-card">
@@ -532,7 +544,7 @@
     </div>
 
     <!-- Call to Action Section -->
-    <section class="cta-section" style>
+    <section id="cta" class="cta-section" style>
       <div class="cta-content">
         <div class="cta-text">
           <h2>Every Drop Counts</h2>
@@ -542,7 +554,7 @@
           </p>
           <div class="cta-buttons">
             <a href="signup.html" class="cta-btn primary">Become a Donor</a>
-            <a href="login.html" class="cta-btn secondary">Request Blood</a>
+            <button id="ctaRequestBtn" class="cta-btn secondary">Request Blood</button>
           </div>
         </div>
         <div class="cta-image">
@@ -588,6 +600,126 @@
       </div>
     </div>
 
+    <!-- Want Blood Modal -->
+    <div id="wantModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close want-close" aria-label="Close">&times;</span>
+        <div class="modal-header">
+          <h2>Request Blood</h2>
+        </div>
+        <div class="modal-body">
+          <form id="wantForm">
+            <div class="modal-section">
+              <label for="reqName">Your Name</label>
+              <input id="reqName" name="reqName" type="text" placeholder="Full name" required />
+            </div>
+            <div class="modal-section form-row">
+              <div>
+                <label for="reqBlood">Blood Type</label>
+                <select id="reqBlood" name="reqBlood" required>
+                  <option value="">Select blood type</option>
+                  <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                  <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                </select>
+              </div>
+              <div>
+                <label for="reqUnits">Units Needed</label>
+                <input id="reqUnits" name="reqUnits" type="number" min="1" placeholder="e.g., 2" required />
+              </div>
+            </div>
+            <div class="modal-section">
+              <label for="reqLocation">Location</label>
+              <input id="reqLocation" name="reqLocation" type="text" placeholder="City, Hospital" required />
+            </div>
+            <div class="modal-section">
+              <label for="reqPhone">Contact Phone</label>
+              <input id="reqPhone" name="reqPhone" type="tel" placeholder="Phone number" required />
+            </div>
+            <div class="modal-section">
+              <label for="reqMessage">Message</label>
+              <textarea id="reqMessage" name="reqMessage" rows="3" placeholder="Any details (optional)"></textarea>
+            </div>
+            <div class="modal-section">
+              <button type="submit" class="cta-btn primary">Post Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donate Modal -->
+    <div id="donateModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close donate-close" aria-label="Close">&times;</span>
+        <div class="modal-header">
+          <h2>Offer Donation</h2>
+        </div>
+        <div class="modal-body">
+          <form id="donateForm">
+            <div class="modal-section">
+              <label for="donorName">Your Name</label>
+              <input id="donorName" name="donorName" type="text" placeholder="Full name" required />
+            </div>
+            <div class="modal-section form-row">
+              <div>
+                <label for="donorBlood">Blood Type</label>
+                <select id="donorBlood" name="donorBlood" required>
+                  <option value="">Select blood type</option>
+                  <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                  <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                </select>
+              </div>
+              <div>
+                <label for="donAvailability">Availability</label>
+                <input id="donAvailability" name="donAvailability" type="text" placeholder="e.g., Weekdays 9am-1pm" />
+              </div>
+            </div>
+            <div class="modal-section">
+              <label for="donLocation">Location</label>
+              <input id="donLocation" name="donLocation" type="text" placeholder="City or Hospital" />
+            </div>
+            <div class="modal-section">
+              <label for="donPhone">Contact Phone</label>
+              <input id="donPhone" name="donPhone" type="tel" placeholder="Phone number" required />
+            </div>
+            <div class="modal-section">
+              <button type="submit" class="cta-btn primary">Offer to Donate</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close profile-close" aria-label="Close">&times;</span>
+        <div class="modal-header">
+          <h2 id="profileName">Your Profile</h2>
+        </div>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h3>Name</h3>
+            <p id="profileNameText">Ram Suryawanshi</p>
+          </div>
+          <div class="modal-section">
+            <h3>Blood Type</h3>
+            <p id="profileBlood">O+</p>
+          </div>
+          <div class="modal-section">
+            <h3>Location</h3>
+            <p id="profileLocation">Bengaluru</p>
+          </div>
+          <div class="modal-section">
+            <button id="editProfileBtn" class="cta-btn primary">Edit Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <div class="footer-container">
         <div class="footer-column about">
@@ -603,6 +735,8 @@
           <ul>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#features">Features</a></li>
+            <li><a href="#stats">Donation Stats</a></li>
+            <li><a href="#cta">More Information</a></li>
           </ul>
         </div>
 
@@ -1020,6 +1154,185 @@
             modal.classList.remove("show");
             setTimeout(() => (modal.style.display = "none"), 300);
           }
+        });
+
+        // --- Profile Modal Functionality ---
+        const profileModal = document.getElementById("profileModal");
+        const profileClose = profileModal && profileModal.querySelector(".profile-close");
+        const headerProfileBtn = document.getElementById("headerProfileBtn");
+        const sidebarProfileBtn = document.getElementById("profileBtn");
+        const editProfileBtn = document.getElementById("editProfileBtn");
+
+        function openProfileModal() {
+          if (!profileModal) return;
+          profileModal.style.display = "block";
+          setTimeout(() => profileModal.classList.add("show"), 10);
+        }
+
+        function closeProfileModal() {
+          if (!profileModal) return;
+          profileModal.classList.remove("show");
+          setTimeout(() => (profileModal.style.display = "none"), 300);
+        }
+
+        headerProfileBtn && headerProfileBtn.addEventListener("click", openProfileModal);
+        headerProfileBtn && headerProfileBtn.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openProfileModal();
+          }
+        });
+
+        sidebarProfileBtn && sidebarProfileBtn.addEventListener("click", openProfileModal);
+
+        profileClose && profileClose.addEventListener("click", closeProfileModal);
+
+        window.addEventListener("click", function (event) {
+          if (event.target === profileModal) {
+            closeProfileModal();
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && profileModal && profileModal.style.display === "block") {
+            closeProfileModal();
+          }
+        });
+
+        editProfileBtn && editProfileBtn.addEventListener("click", function () {
+          // placeholder action; navigate to edit profile page when available
+          alert("Edit profile feature coming soon.");
+        });
+
+        // --- Want & Donate Modals & Forms ---
+        const wantModal = document.getElementById("wantModal");
+        const donateModal = document.getElementById("donateModal");
+        const wantClose = wantModal && wantModal.querySelector(".want-close");
+        const donateClose = donateModal && donateModal.querySelector(".donate-close");
+        const headerWantBtn = document.getElementById("headerWantBtn");
+        const headerDonateBtn = document.getElementById("headerDonateBtn");
+        const ctaRequestBtn = document.getElementById("ctaRequestBtn");
+        const wantForm = document.getElementById("wantForm");
+        const donateForm = document.getElementById("donateForm");
+        const toastEl = document.getElementById("toast");
+
+        function showToast(msg) {
+          if (!toastEl) return;
+          toastEl.textContent = msg;
+          toastEl.classList.add("show");
+          setTimeout(() => toastEl.classList.remove("show"), 3000);
+        }
+
+        function openWantModal() {
+          if (!wantModal) return;
+          wantModal.style.display = "block";
+          setTimeout(() => wantModal.classList.add("show"), 10);
+        }
+        function closeWantModal() {
+          if (!wantModal) return;
+          wantModal.classList.remove("show");
+          setTimeout(() => (wantModal.style.display = "none"), 300);
+        }
+
+        function openDonateModal() {
+          if (!donateModal) return;
+          // prefill donor blood type from profile when possible
+          const profType = document.getElementById("profileBlood");
+          if (profType && document.getElementById("donorBlood").value === "") {
+            document.getElementById("donorBlood").value = profType.textContent.trim();
+          }
+          donateModal.style.display = "block";
+          setTimeout(() => donateModal.classList.add("show"), 10);
+        }
+        function closeDonateModal() {
+          if (!donateModal) return;
+          donateModal.classList.remove("show");
+          setTimeout(() => (donateModal.style.display = "none"), 300);
+        }
+
+        headerWantBtn && headerWantBtn.addEventListener("click", openWantModal);
+        ctaRequestBtn && ctaRequestBtn.addEventListener("click", openWantModal);
+        headerDonateBtn && headerDonateBtn.addEventListener("click", openDonateModal);
+
+        wantClose && wantClose.addEventListener("click", closeWantModal);
+        donateClose && donateClose.addEventListener("click", closeDonateModal);
+
+        window.addEventListener("click", function (event) {
+          if (event.target === wantModal) closeWantModal();
+          if (event.target === donateModal) closeDonateModal();
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") {
+            if (wantModal && wantModal.style.display === "block") closeWantModal();
+            if (donateModal && donateModal.style.display === "block") closeDonateModal();
+          }
+        });
+
+        function updateStatByLabel(label, delta){
+          const cards = document.querySelectorAll('.stat-card');
+          for(const card of cards){
+            const lab = card.querySelector('.stat-label');
+            const val = card.querySelector('.stat-value');
+            if(lab && val && lab.textContent.trim() === label){
+              const cur = parseInt(val.getAttribute('data-target')||val.textContent||'0',10)||0;
+              const next = cur + delta;
+              val.setAttribute('data-target', String(next));
+              val.textContent = String(next);
+              return;
+            }
+          }
+        }
+
+        // Persist arrays in localStorage
+        function pushToLocal(key, obj){
+          try{
+            const existing = JSON.parse(localStorage.getItem(key) || '[]');
+            existing.unshift(obj);
+            localStorage.setItem(key, JSON.stringify(existing));
+          }catch(e){ console.warn(e); }
+        }
+
+        wantForm && wantForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          const data = {
+            name: document.getElementById('reqName').value.trim(),
+            blood: document.getElementById('reqBlood').value,
+            units: document.getElementById('reqUnits').value,
+            location: document.getElementById('reqLocation').value.trim(),
+            phone: document.getElementById('reqPhone').value.trim(),
+            message: document.getElementById('reqMessage').value.trim(),
+            createdAt: new Date().toISOString()
+          };
+          if(!data.name || !data.blood || !data.units || !data.location || !data.phone){
+            showToast('Please complete the required fields');
+            return;
+          }
+          pushToLocal('bloodRequests', data);
+          showToast('Request posted — donors will be notified');
+          wantForm.reset();
+          closeWantModal();
+        });
+
+        donateForm && donateForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          const data = {
+            name: document.getElementById('donorName').value.trim(),
+            blood: document.getElementById('donorBlood').value,
+            availability: document.getElementById('donAvailability').value.trim(),
+            location: document.getElementById('donLocation').value.trim(),
+            phone: document.getElementById('donPhone').value.trim(),
+            createdAt: new Date().toISOString()
+          };
+          if(!data.name || !data.blood || !data.phone){
+            showToast('Please complete the required fields');
+            return;
+          }
+          pushToLocal('donations', data);
+          updateStatByLabel('Total Donations', 1);
+          showToast('Thanks! Your donation offer is recorded.');
+          donateForm.reset();
+          closeDonateModal();
         });
       });
     </script>

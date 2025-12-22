@@ -1554,3 +1554,117 @@ body,
 
 /* Ensure Overview heading turns white in dark mode */
 body.dark #overview h2 { color: #fff !important; }
+
+/* Toggle Switch Button */
+.theme-toggle-switch {
+  border: none;
+  background: none;
+  padding: 12px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 320px;
+  margin: 12px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-track {
+  position: relative;
+  width: 100%;
+  height: 56px;
+  background: linear-gradient(90deg, rgba(60, 60, 80, 0.4) 0%, rgba(130, 130, 150, 0.3) 50%, rgba(200, 200, 220, 0.2) 100%);
+  border-radius: 28px;
+  border: 2px solid rgba(230, 57, 70, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.theme-toggle-switch:hover .toggle-track {
+  border-color: rgba(230, 57, 70, 0.6);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.2);
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #666;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex: 1;
+  justify-content: center;
+}
+
+.toggle-label svg {
+  width: 16px;
+  height: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Yellow sun in light mode */
+.light-label svg {
+  color: #FFD700;
+}
+
+.light-label svg circle,
+.light-label svg line {
+  stroke: #FFD700;
+  fill: #FFD700;
+}
+
+.light-label {
+  z-index: 2;
+  position: relative;
+}
+
+.dark-label {
+  z-index: 2;
+  position: relative;
+}
+
+.toggle-thumb {
+  position: absolute;
+  width: calc(50% - 6px);
+  height: calc(100% - 4px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 24px;
+  backdrop-filter: blur(6px);
+  left: 2px;
+  top: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode toggle state */
+body.dark .toggle-track {
+  background: linear-gradient(90deg, rgba(200, 200, 220, 0.2) 0%, rgba(130, 130, 150, 0.3) 50%, rgba(60, 60, 80, 0.4) 100%);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark .theme-toggle-switch:hover .toggle-track {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .toggle-label {
+  color: #aaa;
+}
+
+body.dark .toggle-thumb {
+  background: linear-gradient(135deg, rgba(100, 100, 150, 0.3) 0%, rgba(100, 100, 150, 0.1) 100%);
+  border-color: rgba(100, 100, 150, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* When toggled to dark mode */
+body.dark .toggle-thumb {
+  left: calc(50% + 2px);
+}

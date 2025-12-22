@@ -16,7 +16,7 @@ router.post('/signup', async (req, res, next) => {
     const user = await User.create({ name, email, password: hash, bloodType, phone, location });
     const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET || 'dev_secret', { expiresIn: '7d' });
     res.cookie('token', token, { httpOnly: true, sameSite: 'lax', secure: false, maxAge: 7*24*60*60*1000 });
-    res.status(201).json({ user: { id: user._id, name: user.name, email: user.email, bloodType: user.bloodType, phone: user.phone, location: user.location }, token });
+    res.status(201).json({ user: { id: user._id, name: user.name, email: user.email, bloodType: user.bloodType, phone: user.phone, location: user.location, role: user.role }, token });
   } catch (err) { next(err); }
 });
 
@@ -29,7 +29,7 @@ router.post('/login', async (req, res, next) => {
     if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
     const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET || 'dev_secret', { expiresIn: '7d' });
     res.cookie('token', token, { httpOnly: true, sameSite: 'lax', secure: false, maxAge: 7*24*60*60*1000 });
-    res.json({ user: { id: user._id, name: user.name, email: user.email, bloodType: user.bloodType, phone: user.phone, location: user.location }, token });
+    res.json({ user: { id: user._id, name: user.name, email: user.email, bloodType: user.bloodType, phone: user.phone, location: user.location, role: user.role }, token });
   } catch (err) { next(err); }
 });
 

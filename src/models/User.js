@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     bloodType: { type: String, enum: ['A+','A-','B+','B-','AB+','AB-','O+','O-'] },
     phone: { type: String },
-    location: { type: String }
+    location: { type: String },
+    role: { type: String, enum: ['user','admin'], default: 'user' }
   },
   { timestamps: true }
 );

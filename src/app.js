@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import authRoutes from './routes/auth.js';
 import donationRoutes from './routes/donations.js';
 import requestRoutes from './routes/requests.js';
+import campRoutes from './routes/camps.js';
 import errorHandler from './middleware/error.js';
 
 const app = express();
@@ -28,6 +29,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/donations', donationRoutes);
 app.use('/api/requests', requestRoutes);
+app.use('/api/camps', campRoutes);
 
 app.use(errorHandler);
 

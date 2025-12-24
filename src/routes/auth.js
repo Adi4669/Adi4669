@@ -2,6 +2,8 @@ import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Donation from '../models/Donation.js';
+import Request from '../models/Request.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
@@ -41,7 +43,26 @@ router.post('/logout', (req, res) => {
 router.get('/me', requireAuth, async (req, res, next) => {
   try {
     const user = await User.findById(req.userId).select('-password');
-    res.json({ user });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const [donationCount, receivedCount] = await Promise.all([
+      Donation.countDocuments({ donor: req.userId }),
+      Request.countDocuments({ requester: req.userId, fulfilled: true }),
+    ]);
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        bloodType: user.bloodType,
+        phone: user.phone,
+        location: user.location,
+        role: user.role,
+        donationCount,
+        receivedCount,
+      },
+    });
   } catch (err) { next(err); }
 });
 

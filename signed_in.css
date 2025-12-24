@@ -15,7 +15,7 @@ body {
   opacity: 1;
   padding-top: 90px;
   margin-bottom: 1000px;
-  transition: opacity 0.5s ease;
+  transition: opacity ease 0.3s;
   color: #333;
 }
 
@@ -117,7 +117,7 @@ img {
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background ease 0.3s;
   border: none;
   /* fixed so it stays visible above sidebar when it opens */
   position: fixed;
@@ -139,7 +139,7 @@ img {
   background: #fff;
   position: relative;
   border-radius: 1px;
-  transition: transform 0.5s ease, background 0.5s ease;
+  transition: transform ease 0.3s, background 0.5s ease;
 }
 .menu.btn6 .icon::before,
 .menu.btn6 .icon::after {
@@ -150,7 +150,7 @@ img {
   height: 2px;
   background: #fff;
   border-radius: 1px;
-  transition: transform 0.5s ease;
+  transition: transform ease 0.3s;
 }
 .menu.btn6 .icon::before { top: -9px; }
 .menu.btn6 .icon::after { top: 9px; }
@@ -158,7 +158,7 @@ img {
 /* Open state: rotate icon 180deg and transform bars into left arrow */
 .menu.btn6.open .icon {
   background: #fff;
-  transition-duration: 0.5s;
+  transition: ease 0.3s;
   transform: rotateZ(180deg) scaleX(0.8);
 }
 .menu.btn6.open .icon::before {
@@ -201,7 +201,7 @@ body.sidebar-open .header .profile-btn {
   opacity: 0;
   visibility: hidden;
   transform: translateY(6px);
-  transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
+  transition: opacity ease 0.3s, transform 200ms ease, visibility 200ms;
   z-index: 10040;
 }
 
@@ -234,7 +234,7 @@ body.sidebar-open .header .profile-btn {
   font-weight: 500;
   margin-right: 30px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   display: inline-block;
 }
 .nav-link:hover {
@@ -254,7 +254,7 @@ body.sidebar-open .header .profile-btn {
   text-decoration: none;
   background-color: #F3F4F6;
   color: #1F1F1F;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 } 
 
 .login:hover{
@@ -315,8 +315,8 @@ body.sidebar-open .header .profile-btn {
 .want.profile-cta{ background: linear-gradient(90deg,#d42020,#e63946); box-shadow: 0 6px 20px rgba(230,57,70,0.18); }
 .donate.profile-cta{ background: linear-gradient(90deg,#2bb673,#1db954); box-shadow: 0 6px 20px rgba(45,160,120,0.18); }
 .profile-cta:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.12); cursor:pointer; }
-.want.profile-cta:hover{background: linear-gradient(90deg,#d42020,#e2535f); box-shadow: 0 6px 20px rgba(230,57,70,0.18); transition: all 0.3s ease;}
-.donate.profile-cta:hover{background: linear-gradient(90deg,#2bb673,#2d9c54); box-shadow: 0 6px 20px rgba(45,160,120,0.18); transition: all 0.3s ease;}
+.want.profile-cta:hover{background: linear-gradient(90deg,#d42020,#e2535f); box-shadow: 0 6px 20px rgba(230,57,70,0.18); transition: all ease 0.3s;}
+.donate.profile-cta:hover{background: linear-gradient(90deg,#2bb673,#2d9c54); box-shadow: 0 6px 20px rgba(45,160,120,0.18); transition: all ease 0.3s;}
 
 /* CTA secondary button style (used in CTA section) */
 .cta-btn.secondary{ background: linear-gradient(90deg,#d42020,#e63946); color: white; border-radius: 8px; padding: 10px 14px; }
@@ -328,7 +328,7 @@ body.sidebar-open .header .profile-btn {
 .modal .form-row > *{ flex:1 }
 
 /* Toast */
-.toast{ position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 10px 16px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; z-index: 20000; }
+.toast{ position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 10px 16px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity ease 0.3s, transform .25s ease; z-index: 20000; }
 .toast.show{ opacity: 1; transform: translateX(-50%) translateY(-6px); pointer-events: auto; }
 
 .login:hover{
@@ -355,10 +355,17 @@ body.sidebar-open .header .profile-btn {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.welcome-message {
+  font-size: 18px;
+  color: #444;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
 #overview img {
   border-radius: 20px !important;
   box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
-  transition: transform 0.3s ease;
+  transition: transform ease 0.3s;
 }
 
 #overview img:hover {
@@ -395,7 +402,7 @@ body.sidebar-open .header .profile-btn {
   border: 2px solid #e63946;
   color: #000000;
   border-radius: 25px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   margin: 0 10px;
   position: relative;
 }
@@ -456,7 +463,7 @@ body.sidebar-open .header .profile-btn {
 .site-footer a {
   color: #ffdede;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 .site-footer a:hover {
   text-decoration: underline;
@@ -540,7 +547,7 @@ body.sidebar-open .header .profile-btn {
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   display: inline-block;
 }
 
@@ -591,7 +598,7 @@ body.sidebar-open .header .profile-btn {
   font-size: 20px;
   font-weight: 700;
   color: white;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .blood-type-badge:hover {
@@ -612,7 +619,7 @@ body.sidebar-open .header .profile-btn {
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity ease 0.3s;
 }
 
 .modal.show {
@@ -654,7 +661,7 @@ body.sidebar-open .header .profile-btn {
   line-height: 1;
   cursor: pointer;
   z-index: 1;
-  transition: transform 0.2s ease;
+  transition: transform ease 0.3s;
   width: 40px;
   height: 40px;
   display: flex;
@@ -726,7 +733,7 @@ body.sidebar-open .header .profile-btn {
   background: rgba(255, 255, 255, 0.6);
   border-radius: 15px;
   border-left: 4px solid #d32f2f;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform ease 0.3s, box-shadow 0.2s ease;
 }
 
 .modal-section:hover {
@@ -999,7 +1006,7 @@ body.sidebar-open .header .profile-btn {
   display: inline-block;
   cursor: pointer;
   padding-bottom: 6px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .nav-btn:not(:last-child) {
@@ -1036,7 +1043,7 @@ body.sidebar-open .header .profile-btn {
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
+  transition: all ease 0.3s;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -1053,7 +1060,7 @@ body.sidebar-open .header .profile-btn {
   height: 4px;
   background: linear-gradient(90deg, #e63946 0%, #d32f2f 100%);
   transform: scaleX(0);
-  transition: transform 0.3s ease;
+  transition: transform ease 0.3s;
 }
 
 .feature-card:hover::before {
@@ -1073,7 +1080,7 @@ body.sidebar-open .header .profile-btn {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
   color: #d32f2f;
-  transition: color 0.3s ease;
+  transition: color ease 0.3s;
 }
 
 .feature-card:hover h3 {
@@ -1085,7 +1092,7 @@ body.sidebar-open .header .profile-btn {
   color: #666;
   font-size: 0.9rem;
   line-height: 1.6;
-  transition: color 0.3s ease;
+  transition: color ease 0.3s;
 }
 
 .feature-card:hover p {
@@ -1166,7 +1173,7 @@ body.sidebar-open .header .profile-btn {
   --muted: #9aa4b2;
   --width-open: 380px; /* increased so sidebar contents are clearly visible */
   --width-closed: 140px; /* larger collapsed width to keep icons readable */
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: ease 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html,
@@ -1192,7 +1199,7 @@ body {
 .content {
   margin-top: 100px;
   margin-left: 0;
-  transition: margin-left 280ms ease;
+  transition: margin-left ease 0.3s;
 }
 
 /* Sidebar */
@@ -1215,7 +1222,7 @@ body {
   z-index: 10005; /* below sidebar (10010) but above page content */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 240ms ease, visibility 240ms ease;
+  transition: opacity ease 0.3s, visibility 240ms ease;
 }
 
 .overlay.active {
@@ -1302,7 +1309,7 @@ body {
   cursor: pointer;
   color: #dbe9f5;
   text-decoration: none;
-  transition: background 180ms ease, transform 180ms ease;
+  transition: background ease 0.3s, transform 180ms ease;
 }
 
 .nav-item:hover {
@@ -1425,7 +1432,7 @@ body {
 /* Collapsed width for compact state */
 .sidebar.collapsed {
   width: var(--width-closed); /* small preview with icons visible */
-  transition: width 220ms ease;
+  transition: width ease 0.3s;
 }
 
 /* Show subtle dividers between groups */
@@ -1508,7 +1515,7 @@ a {
 
 /* Theme toggle button */
 .theme-toggle{
-  display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;border:none;background:#F3F4F6;color:#1F1F1F;transition:all .3s ease
+  display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;border:none;background:#F3F4F6;color:#1F1F1F;transition: all ease 0.3s
 }
 .theme-toggle:hover{background:#524bb4;color:#fff;transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,.2)}
 
@@ -1549,7 +1556,7 @@ body,
 .nav-link,
 .profile-btn,
 .theme-toggle {
-  transition: background-color .35s ease, color .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease;
+  transition: background-color ease 0.3s, color .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease;
 }
 
 /* Ensure Overview heading turns white in dark mode */
@@ -1580,7 +1587,7 @@ body.dark #overview h2 { color: #fff !important; }
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   overflow: hidden;
 }
 
@@ -1596,7 +1603,7 @@ body.dark #overview h2 { color: #fff !important; }
   font-size: 12px;
   font-weight: 700;
   color: #666;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   white-space: nowrap;
   flex: 1;
   justify-content: center;
@@ -1605,7 +1612,7 @@ body.dark #overview h2 { color: #fff !important; }
 .toggle-label svg {
   width: 16px;
   height: 16px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 /* Yellow sun in light mode */

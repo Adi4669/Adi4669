@@ -122,6 +122,16 @@
         /* backdrop-filter: blur(12px); */
       ">
       <div style="flex: 1; min-width: 300px; text-align: left">
+        <p
+          id="welcomeMessage"
+          class="welcome-message"
+          aria-live="polite"
+          style="
+            margin: 0 0 8px;
+            font-size: 18px;
+            color: #444;
+            font-weight: 600;
+          "></p>
         <h1
           style="
             font-size: 80px;
@@ -924,6 +934,13 @@
             <p id="profileLocation"></p>
           </div>
           <div class="modal-section">
+            <h3>Your Activity</h3>
+            <p>
+              <span id="profileDonationCount">0</span> donations made •
+              <span id="profileReceivedCount">0</span> times received
+            </p>
+          </div>
+          <div class="modal-section">
             <button id="editProfileBtn" class="cta-btn primary">
               Edit Profile
             </button>
@@ -1031,37 +1048,64 @@
           const bloodEl = document.getElementById("profileBlood");
           const locEl = document.getElementById("profileLocation");
           const headingEl = document.getElementById("profileName");
+          const welcomeEl = document.getElementById("welcomeMessage");
+          const donationCountEl = document.getElementById(
+            "profileDonationCount"
+          );
+          const receivedCountEl = document.getElementById(
+            "profileReceivedCount"
+          );
           if (!nameEl || !bloodEl || !locEl) return;
           try {
-            const token = localStorage.getItem('token');
-            console.log('Token from localStorage:', token ? 'Present' : 'Missing');
+            const token = localStorage.getItem("token");
+            console.log(
+              "Token from localStorage:",
+              token ? "Present" : "Missing"
+            );
             const headers = { Accept: "application/json" };
             if (token) {
               headers.Authorization = `Bearer ${token}`;
-              console.log('Authorization header set');
+              console.log("Authorization header set");
             }
             const res = await fetch(`${API_BASE}/api/auth/me`, {
               credentials: "include",
               headers,
             });
-            console.log('Profile fetch response status:', res.status);
+            console.log("Profile fetch response status:", res.status);
             if (!res.ok) {
               const errorData = await res.text();
-              console.error(`Profile fetch failed with status ${res.status}:`, errorData);
+              console.error(
+                `Profile fetch failed with status ${res.status}:`,
+                errorData
+              );
               return;
             }
             const data = await res.json();
-            console.log('Profile data received:', data);
+            console.log("Profile data received:", data);
             const user = data?.user;
             if (!user) {
-              console.warn('No user data in response');
+              console.warn("No user data in response");
               return;
             }
             nameEl.textContent = user.name || "Unknown";
             bloodEl.textContent = user.bloodType || "-";
             locEl.textContent = user.location || "Not set";
             if (headingEl) headingEl.textContent = user.name || "Your Profile";
-            console.log('Profile updated successfully');
+            if (welcomeEl) {
+              const firstName = (user.name || "").split(" ")[0];
+              welcomeEl.textContent = firstName
+                ? `Welcome, ${firstName}! You're now signed in.`
+                : "Welcome! You're now signed in.";
+            }
+            if (donationCountEl) {
+              donationCountEl.textContent =
+                typeof user.donationCount === "number" ? user.donationCount : 0;
+            }
+            if (receivedCountEl) {
+              receivedCountEl.textContent =
+                typeof user.receivedCount === "number" ? user.receivedCount : 0;
+            }
+            console.log("Profile updated successfully");
           } catch (err) {
             console.error("Profile fetch failed", err);
           }

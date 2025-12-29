@@ -327,7 +327,9 @@
                   fill="white" />
               </svg>
             </div>
-            <div class="stat-value" data-target="12">0</div>
+            <div class="stat-value" data-stat="donations" data-target="12">
+              0
+            </div>
             <div class="stat-label">Total Donations</div>
           </div>
           <div class="stat-card">
@@ -345,7 +347,7 @@
                   fill="white" />
               </svg>
             </div>
-            <div class="stat-value" data-target="10">0</div>
+            <div class="stat-value" data-stat="donors" data-target="10">0</div>
             <div class="stat-label">Active Donors</div>
           </div>
           <div class="stat-card">
@@ -367,7 +369,9 @@
                   fill="none" />
               </svg>
             </div>
-            <div class="stat-value" data-target="4">0</div>
+            <div class="stat-value" data-stat="fulfilled" data-target="4">
+              0
+            </div>
             <div class="stat-label">Requests Fulfilled</div>
           </div>
           <div class="stat-card">
@@ -387,7 +391,7 @@
                   fill="none" />
               </svg>
             </div>
-            <div class="stat-value" data-target="1">0</div>
+            <div class="stat-value" data-stat="camps" data-target="1">0</div>
             <div class="stat-label">Blood Banks Linked</div>
           </div>
         </div>
@@ -497,6 +501,8 @@
     </footer>
 
     <script>
+      const API_BASE = "http://localhost:4000";
+
       // --- 1. Page Transitions ---
       function pageTransition(e) {
         e.preventDefault();
@@ -694,7 +700,84 @@
         // Set current year in footer
         document.getElementById("year").textContent = new Date().getFullYear();
 
-        // --- Donation Stats: animate counters when visible ---
+        // --- Donation Stats: fetch live counts and animate counters when visible ---
+        async function loadLandingStats() {
+          try {
+            const headers = { Accept: "application/json" };
+
+            const donationsRes = await fetch(`${API_BASE}/api/donations`, {
+              credentials: "include",
+              headers,
+            });
+            const donationsData = donationsRes.ok
+              ? await donationsRes.json()
+              : { donations: [] };
+            const totalDonations = donationsData.donations
+              ? donationsData.donations.length
+              : 0;
+
+            const activeDonors = donationsData.donations
+              ? new Set(
+                  donationsData.donations
+                    .map((d) => d.donor && d.donor._id)
+                    .filter(Boolean)
+                ).size
+              : 0;
+
+            const requestsRes = await fetch(`${API_BASE}/api/requests`, {
+              credentials: "include",
+              headers,
+            });
+            const requestsData = requestsRes.ok
+              ? await requestsRes.json()
+              : { requests: [] };
+            const fulfilledRequests = requestsData.requests
+              ? requestsData.requests.filter((r) => r.fulfilled).length
+              : 0;
+
+            const campsRes = await fetch(`${API_BASE}/api/camps`, {
+              credentials: "include",
+              headers,
+            });
+            const campsData = campsRes.ok
+              ? await campsRes.json()
+              : { camps: [] };
+            const totalCamps = campsData.camps ? campsData.camps.length : 0;
+
+            const donationsEl = document.querySelector(
+              '[data-stat="donations"]'
+            );
+            const donorsEl = document.querySelector('[data-stat="donors"]');
+            const fulfilledEl = document.querySelector(
+              '[data-stat="fulfilled"]'
+            );
+            const campsEl = document.querySelector('[data-stat="camps"]');
+
+            if (donationsEl)
+              donationsEl.setAttribute("data-target", String(totalDonations));
+            if (donorsEl)
+              donorsEl.setAttribute("data-target", String(activeDonors));
+            if (fulfilledEl)
+              fulfilledEl.setAttribute(
+                "data-target",
+                String(fulfilledRequests)
+              );
+            if (campsEl)
+              campsEl.setAttribute("data-target", String(totalCamps));
+
+            console.log("Landing stats:", {
+              totalDonations,
+              activeDonors,
+              fulfilledRequests,
+              totalCamps,
+            });
+          } catch (err) {
+            console.error("Landing stats fetch failed", err);
+          }
+        }
+
+        loadLandingStats();
+
         const statElements = document.querySelectorAll(".stat-value");
         if ("IntersectionObserver" in window && statElements.length) {
           const obs = new IntersectionObserver(
@@ -704,7 +787,7 @@
                 const el = entry.target;
                 const target =
                   parseInt(el.getAttribute("data-target"), 10) || 0;
-                const duration = 1400;
+                const duration = 300; // smooth but quick animation
                 const start = performance.now();
 
                 const tick = (now) => {
@@ -719,12 +802,12 @@
                 observer.unobserve(el);
               });
             },
-            { threshold: 0.4 }
+            { threshold: 0.1 }
           );
 
           statElements.forEach((s) => obs.observe(s));
         } else {
-          // Fallback: just populate values
+          // Fallback: just populate values instantly
           statElements.forEach((el) => {
             const t = el.getAttribute("data-target");
             if (t) el.textContent = parseInt(t, 10).toLocaleString();

@@ -1294,7 +1294,7 @@
               : { camps: [] };
             const totalCamps = campsData.camps ? campsData.camps.length : 0;
 
-            // Update stat values in the UI using data-stat attributes
+            // Update stat targets in the UI; animation reads these via data-target
             const donationsEl = document.querySelector(
               '[data-stat="donations"]'
             );
@@ -1304,10 +1304,17 @@
             );
             const campsEl = document.querySelector('[data-stat="camps"]');
 
-            if (donationsEl) donationsEl.textContent = totalDonations;
-            if (donorsEl) donorsEl.textContent = activeDonors;
-            if (fulfilledEl) fulfilledEl.textContent = fulfilledRequests;
-            if (campsEl) campsEl.textContent = totalCamps;
+            if (donationsEl)
+              donationsEl.setAttribute("data-target", String(totalDonations));
+            if (donorsEl)
+              donorsEl.setAttribute("data-target", String(activeDonors));
+            if (fulfilledEl)
+              fulfilledEl.setAttribute(
+                "data-target",
+                String(fulfilledRequests)
+              );
+            if (campsEl)
+              campsEl.setAttribute("data-target", String(totalCamps));
 
             console.log("Stats loaded:", {
               totalDonations,
@@ -1541,7 +1548,7 @@
                 const el = entry.target;
                 const target =
                   parseInt(el.getAttribute("data-target"), 10) || 0;
-                const duration = 1400;
+                const duration = 300; // smooth but quick animation
                 const start = performance.now();
 
                 const tick = (now) => {
@@ -1556,12 +1563,12 @@
                 observer.unobserve(el);
               });
             },
-            { threshold: 0.4 }
+            { threshold: 0.1 }
           );
 
           statElements.forEach((s) => obs.observe(s));
         } else {
-          // Fallback: just populate values
+          // Fallback: just populate values instantly if IntersectionObserver is unavailable
           statElements.forEach((el) => {
             const t = el.getAttribute("data-target");
             if (t) el.textContent = parseInt(t, 10).toLocaleString();

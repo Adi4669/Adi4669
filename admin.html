@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard · The Red Thread</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <h1>The Red Thread — Admin</h1>
+      <nav>
+        <a href="signed_in.html">Back to App</a>
+        <button id="logoutBtn" class="btn">Logout</button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="cards">
+        <div class="card">
+          <div class="card-title">Total Donations</div>
+          <div id="donationCount" class="card-value">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Open Requests</div>
+          <div id="requestCount" class="card-value">—</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Camps</div>
+          <div id="campCount" class="card-value">—</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Donations</h2>
+          <div class="filters">
+            <label
+              >Blood Type
+              <select id="donationFilterType">
+                <option value="">All</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+              </select>
+            </label>
+            <input id="donationFilterLocation" placeholder="Location filter" />
+            <button id="refreshDonations" class="btn">Refresh</button>
+          </div>
+        </div>
+        <div id="donationsList" class="list">Loading...</div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Requests</h2>
+          <div class="filters">
+            <label
+              >Blood Type
+              <select id="requestFilterType">
+                <option value="">All</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+              </select>
+            </label>
+            <input id="requestFilterLocation" placeholder="Location filter" />
+            <button id="refreshRequests" class="btn">Refresh</button>
+          </div>
+        </div>
+        <div id="requestsList" class="list">Loading...</div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Manage Camps</h2>
+        </div>
+        <form id="campForm" class="camp-form">
+          <input id="campTitle" placeholder="Title" required />
+          <input id="campDate" type="date" required />
+          <input id="campLocation" placeholder="Location" required />
+          <input id="campOrganizer" placeholder="Organizer (optional)" />
+          <button class="btn" type="submit">Add Camp</button>
+        </form>
+        <div id="campsList" class="list empty">No camps yet.</div>
+      </section>
+    </main>
+
+    <script>
+      const API_BASE = "http://localhost:4000";
+
+      function authHeaders() {
+        const token = localStorage.getItem("token");
+        const headers = { Accept: "application/json" };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        return headers;
+      }
+
+      // Function to fulfill a blood request (admin)
+      async function adminFulfillRequest(requestId) {
+        try {
+          const token = localStorage.getItem("token");
+          const res = await fetch(`${API_BASE}/api/requests/${requestId}`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ fulfilled: true }),
+          });
+
+          if (!res.ok) {
+            const error = await res.json();
+            alert(error.message || "Failed to fulfill request");
+            return;
+          }
+
+          alert("Request marked as fulfilled!");
+          // Refresh the requests list
+          loadRequests().catch((err) => console.error(err));
+        } catch (e) {
+          alert("Error fulfilling request: " + e.message);
+        }
+      }
+
+      // Function to delete a blood request (admin)
+      async function adminDeleteRequest(requestId) {
+        if (!confirm("Are you sure you want to delete this request?")) return;
+        try {
+          const token = localStorage.getItem("token");
+          const res = await fetch(
+            `${API_BASE}/api/requests/${requestId}/admin`,
+            {
+              method: "DELETE",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!res.ok) {
+            const error = await res.json().catch(() => ({}));
+            alert(error.message || "Failed to delete request");
+            return;
+          }
+
+          alert("Request deleted.");
+          loadRequests().catch((err) => console.error(err));
+        } catch (e) {
+          alert("Error deleting request: " + e.message);
+        }
+      }
+
+      async function fetchJSON(url) {
+        const res = await fetch(url, {
+          credentials: "include",
+          headers: authHeaders(),
+        });
+        if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+        return res.json();
+      }
+
+      function renderDonations(list) {
+        const el = document.getElementById("donationsList");
+        document.getElementById("donationCount").textContent = list.length;
+        if (!list.length) {
+          el.innerHTML = '<div class="empty">No donations found.</div>';
+          return;
+        }
+        el.innerHTML = list
+          .map(
+            (d) => `
+          <div class="row">
+            <div class="row-main">
+              <strong>${(d.donor && d.donor.name) || "Anonymous"}</strong>
+              • ${d.bloodType || "-"} • ${d.units || "?"} units
+            </div>
+            <div class="row-sub">${d.location || "-"}${
+              d.available === false ? " • not available" : ""
+            }</div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function renderRequests(list) {
+        const el = document.getElementById("requestsList");
+        const open = list.filter((r) => r.fulfilled !== true);
+        document.getElementById("requestCount").textContent = open.length;
+        if (!list.length) {
+          el.innerHTML = '<div class="empty">No requests found.</div>';
+          return;
+        }
+        el.innerHTML = list
+          .map(
+            (r) => `
+          <div class="row" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <div style="flex: 1;">
+              <div class="row-main">
+                <strong>${
+                  (r.requester && r.requester.name) || "Unknown"
+                }</strong>
+                • ${r.bloodType || "-"} • ${r.units || "?"} units${
+              r.fulfilled ? " • fulfilled" : ""
+            }
+              </div>
+              <div class="row-sub">${r.location || "-"}${
+              r.urgency ? " • " + r.urgency : ""
+            }</div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center; margin-left: 12px;">
+              ${
+                !r.fulfilled
+                  ? `<button onclick="adminFulfillRequest('${r._id}')" style="padding: 8px 16px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap;">
+                Mark Fulfilled
+              </button>`
+                  : `<span style="padding: 8px 16px; background-color: #95a5a6; color: white; border-radius: 4px; white-space: nowrap; font-weight: 600;">✓ Done</span>`
+              }
+              <button onclick="adminDeleteRequest('${
+                r._id
+              }')" style="padding: 8px 16px; background-color: #c0392b; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap;">
+                Remove
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      // Function to delete a camp (admin)
+      async function adminDeleteCamp(campId) {
+        if (!confirm("Are you sure you want to delete this camp?")) return;
+        try {
+          const res = await fetch(`${API_BASE}/api/camps/${campId}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: { "Content-Type": "application/json", ...authHeaders() },
+          });
+
+          if (!res.ok) {
+            const error = await res.json().catch(() => ({}));
+            alert(error.message || "Failed to delete camp");
+            return;
+          }
+
+          alert("Camp deleted.");
+          loadCamps();
+        } catch (e) {
+          alert("Error deleting camp: " + e.message);
+        }
+      }
+
+      async function loadCamps() {
+        const el = document.getElementById("campsList");
+        try {
+          const data = await fetchJSON(`${API_BASE}/api/camps`);
+          const list = data.camps || [];
+          document.getElementById("campCount").textContent = list.length;
+          if (!list.length) {
+            el.classList.add("empty");
+            el.textContent = "No camps yet.";
+            return;
+          }
+          el.classList.remove("empty");
+          el.innerHTML = list
+            .map(
+              (c) => `
+          <div class="row" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="row-main"><strong>${c.title}</strong> • ${
+                c.date ? new Date(c.date).toLocaleDateString() : "TBD"
+              }</div>
+              <div class="row-sub">${c.location || "Location TBD"}${
+                c.organizer ? " • " + c.organizer : ""
+              }</div>
+            </div>
+            <button onclick="adminDeleteCamp('${
+              c._id
+            }')" style="padding: 8px 16px; background-color: #228B22; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap; margin-left: 12px;">
+              Completed
+            </button>
+          </div>
+        `
+            )
+            .join("");
+        } catch (e) {
+          el.classList.add("empty");
+          el.textContent = "Failed to load camps.";
+        }
+      }
+
+      async function loadDonations() {
+        const type = document.getElementById("donationFilterType").value;
+        const loc = document
+          .getElementById("donationFilterLocation")
+          .value.trim();
+        const params = new URLSearchParams();
+        if (type) params.set("bloodType", type);
+        if (loc) params.set("location", loc);
+        const data = await fetchJSON(
+          `${API_BASE}/api/donations?${params.toString()}`
+        );
+        renderDonations(data.donations || []);
+      }
+
+      async function loadRequests() {
+        const type = document.getElementById("requestFilterType").value;
+        const loc = document
+          .getElementById("requestFilterLocation")
+          .value.trim();
+        const params = new URLSearchParams();
+        if (type) params.set("bloodType", type);
+        if (loc) params.set("location", loc);
+        const data = await fetchJSON(
+          `${API_BASE}/api/requests?${params.toString()}`
+        );
+        renderRequests(data.requests || []);
+      }
+      document
+        .getElementById("refreshDonations")
+        .addEventListener("click", () => {
+          loadDonations().catch((err) => console.error(err));
+        });
+      document
+        .getElementById("refreshRequests")
+        .addEventListener("click", () => {
+          loadRequests().catch((err) => console.error(err));
+        });
+
+      document
+        .getElementById("campForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const title = document.getElementById("campTitle").value.trim();
+          const date = document.getElementById("campDate").value;
+          const location = document.getElementById("campLocation").value.trim();
+          const organizer = document
+            .getElementById("campOrganizer")
+            .value.trim();
+          if (!title || !date || !location) return;
+          try {
+            const res = await fetch(`${API_BASE}/api/camps`, {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json", ...authHeaders() },
+              body: JSON.stringify({ title, date, location, organizer }),
+            });
+            if (!res.ok) throw new Error("Create failed");
+            e.target.reset();
+            loadCamps();
+          } catch (err) {
+            alert("Failed to create camp (admin only)");
+          }
+        });
+
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", async () => {
+          try {
+            await fetch(`${API_BASE}/api/auth/logout`, {
+              method: "POST",
+              credentials: "include",
+              headers: authHeaders(),
+            });
+          } catch {}
+          localStorage.removeItem("token");
+          window.location.href = "login.html";
+        });
+
+      // bootstrap
+      (function init() {
+        loadDonations().catch((err) => console.error(err));
+        loadRequests().catch((err) => console.error(err));
+        loadCamps();
+      })();
+    </script>
+  </body>
+</html>

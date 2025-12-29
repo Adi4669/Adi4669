@@ -122,6 +122,16 @@
         /* backdrop-filter: blur(12px); */
       ">
       <div style="flex: 1; min-width: 300px; text-align: left">
+        <p
+          id="welcomeMessage"
+          class="welcome-message"
+          aria-live="polite"
+          style="
+            margin: 0 0 8px;
+            font-size: 18px;
+            color: #444;
+            font-weight: 600;
+          "></p>
         <h1
           style="
             font-size: 80px;
@@ -338,7 +348,7 @@
                   fill="white" />
               </svg>
             </div>
-            <div class="stat-value" data-target="12">0</div>
+            <div class="stat-value" data-stat="donations">0</div>
             <div class="stat-label">Total Donations</div>
           </div>
           <div class="stat-card">
@@ -356,7 +366,7 @@
                   fill="white" />
               </svg>
             </div>
-            <div class="stat-value" data-target="10">0</div>
+            <div class="stat-value" data-stat="donors">0</div>
             <div class="stat-label">Active Donors</div>
           </div>
           <div class="stat-card">
@@ -378,7 +388,7 @@
                   fill="none" />
               </svg>
             </div>
-            <div class="stat-value" data-target="4">0</div>
+            <div class="stat-value" data-stat="fulfilled">0</div>
             <div class="stat-label">Requests Fulfilled</div>
           </div>
           <div class="stat-card">
@@ -398,7 +408,7 @@
                   fill="none" />
               </svg>
             </div>
-            <div class="stat-value" data-target="1">0</div>
+            <div class="stat-value" data-stat="camps">0</div>
             <div class="stat-label">Blood Banks Linked</div>
           </div>
         </div>
@@ -863,12 +873,16 @@
                 </select>
               </div>
               <div>
-                <label for="donAvailability">Availability</label>
+                <label for="donUnits">Units (0.5–10)</label>
                 <input
-                  id="donAvailability"
-                  name="donAvailability"
-                  type="text"
-                  placeholder="e.g., Weekdays 9am-1pm" />
+                  id="donUnits"
+                  name="donUnits"
+                  type="number"
+                  step="0.5"
+                  min="0.5"
+                  max="10"
+                  placeholder="Units available"
+                  required />
               </div>
             </div>
             <div class="modal-section">
@@ -901,6 +915,107 @@
     <!-- Toast -->
     <div id="toast" class="toast" aria-live="polite"></div>
 
+    <!-- Donors List Modal -->
+    <div id="donorsListModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close donorslist-close" aria-label="Close"
+          >&times;</span
+        >
+        <div class="modal-header">
+          <h2>All Donors</h2>
+        </div>
+        <div class="modal-body">
+          <div id="donorsListContainer" class="list-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requests List Modal -->
+    <div id="requestsListModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close requestslist-close" aria-label="Close"
+          >&times;</span
+        >
+        <div class="modal-header">
+          <h2>Blood Requests</h2>
+        </div>
+        <div class="modal-body">
+          <div id="requestsListContainer" class="list-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Camps Modal -->
+    <div id="campsModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close camps-close" aria-label="Close">&times;</span>
+        <div class="modal-header">
+          <h2>Upcoming Camps</h2>
+        </div>
+        <div class="modal-body">
+          <div id="campsListContainer" class="list-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Camp Registration Modal -->
+    <div id="campRegisterModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close camp-register-close" aria-label="Close"
+          >&times;</span
+        >
+        <div class="modal-header">
+          <h2>Register for Camp</h2>
+        </div>
+        <div class="modal-body">
+          <form id="campRegisterForm">
+            <div class="modal-section">
+              <label for="regBloodType">Blood Type</label>
+              <select id="regBloodType" name="regBloodType" required>
+                <option value="">Select blood type</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+              </select>
+            </div>
+            <div class="modal-section form-row">
+              <div>
+                <label for="regUnits">Units to Donate</label>
+                <input
+                  id="regUnits"
+                  name="regUnits"
+                  type="number"
+                  min="0.5"
+                  max="10"
+                  step="0.5"
+                  placeholder="e.g., 1"
+                  required />
+              </div>
+              <div>
+                <label for="regLocation">Location</label>
+                <input
+                  id="regLocation"
+                  name="regLocation"
+                  type="text"
+                  placeholder="City/area"
+                  required />
+              </div>
+            </div>
+            <div class="modal-section">
+              <button type="submit" class="cta-btn primary" style="width: 100%">
+                Confirm Registration
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Profile Modal -->
     <div id="profileModal" class="modal" aria-hidden="true">
       <div class="modal-content">
@@ -922,6 +1037,13 @@
           <div class="modal-section">
             <h3>Location</h3>
             <p id="profileLocation"></p>
+          </div>
+          <div class="modal-section">
+            <h3>Your Activity</h3>
+            <p>
+              <span id="profileDonationCount">0</span> donations made &bull;
+              <span id="profileReceivedCount">0</span> times received
+            </p>
           </div>
           <div class="modal-section">
             <button id="editProfileBtn" class="cta-btn primary">
@@ -978,6 +1100,43 @@
     </footer>
 
     <script>
+      // Global API base
+      const API_BASE = "http://localhost:4000";
+
+      // --- Global Functions (accessible from onclick handlers) ---
+      async function fulfillRequest(requestId) {
+        try {
+          const token = localStorage.getItem("token");
+          const res = await fetch(
+            `${API_BASE}/api/requests/${requestId}/fulfill`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                Accept: "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+            }
+          );
+
+          if (!res.ok) {
+            const error = await res.json();
+            alert(error.message || "Failed to fulfill request");
+            return;
+          }
+
+          alert("Request marked as fulfilled!");
+          // Refresh the requests list
+          const requestsListModal =
+            document.getElementById("requestsListModal");
+          if (requestsListModal) {
+            openRequestsListModal();
+          }
+        } catch (e) {
+          alert("Error fulfilling request: " + e.message);
+        }
+      }
+
       // --- 1. Page Transitions ---
       function pageTransition(e) {
         e.preventDefault();
@@ -1024,44 +1183,69 @@
         });
 
         // --- 3b. Load current user into Profile section ---
-        const API_BASE = "http://localhost:4000";
-
         async function loadProfile() {
           const nameEl = document.getElementById("profileNameText");
           const bloodEl = document.getElementById("profileBlood");
           const locEl = document.getElementById("profileLocation");
           const headingEl = document.getElementById("profileName");
+          const welcomeEl = document.getElementById("welcomeMessage");
+          const donationCountEl = document.getElementById(
+            "profileDonationCount"
+          );
+          const receivedCountEl = document.getElementById(
+            "profileReceivedCount"
+          );
           if (!nameEl || !bloodEl || !locEl) return;
           try {
-            const token = localStorage.getItem('token');
-            console.log('Token from localStorage:', token ? 'Present' : 'Missing');
+            const token = localStorage.getItem("token");
+            console.log(
+              "Token from localStorage:",
+              token ? "Present" : "Missing"
+            );
             const headers = { Accept: "application/json" };
             if (token) {
               headers.Authorization = `Bearer ${token}`;
-              console.log('Authorization header set');
+              console.log("Authorization header set");
             }
             const res = await fetch(`${API_BASE}/api/auth/me`, {
               credentials: "include",
               headers,
             });
-            console.log('Profile fetch response status:', res.status);
+            console.log("Profile fetch response status:", res.status);
             if (!res.ok) {
               const errorData = await res.text();
-              console.error(`Profile fetch failed with status ${res.status}:`, errorData);
+              console.error(
+                `Profile fetch failed with status ${res.status}:`,
+                errorData
+              );
               return;
             }
             const data = await res.json();
-            console.log('Profile data received:', data);
+            console.log("Profile data received:", data);
             const user = data?.user;
             if (!user) {
-              console.warn('No user data in response');
+              console.warn("No user data in response");
               return;
             }
             nameEl.textContent = user.name || "Unknown";
             bloodEl.textContent = user.bloodType || "-";
             locEl.textContent = user.location || "Not set";
             if (headingEl) headingEl.textContent = user.name || "Your Profile";
-            console.log('Profile updated successfully');
+            if (welcomeEl) {
+              const firstName = (user.name || "").split(" ")[0];
+              welcomeEl.textContent = firstName
+                ? `Welcome, ${firstName}! You're now signed in.`
+                : "Welcome! You're now signed in.";
+            }
+            if (donationCountEl) {
+              donationCountEl.textContent =
+                typeof user.donationCount === "number" ? user.donationCount : 0;
+            }
+            if (receivedCountEl) {
+              receivedCountEl.textContent =
+                typeof user.receivedCount === "number" ? user.receivedCount : 0;
+            }
+            console.log("Profile updated successfully");
           } catch (err) {
             console.error("Profile fetch failed", err);
           }
@@ -1069,7 +1253,83 @@
 
         loadProfile();
 
-        // --- 4. NEW Sidebar Logic (Slide-in Drawer) ---
+        // --- 3c. Load and update donation stats from database ---
+        async function loadStats() {
+          try {
+            const token = localStorage.getItem("token");
+            const headers = { Accept: "application/json" };
+            if (token) {
+              headers.Authorization = `Bearer ${token}`;
+            }
+
+            // Fetch total donations count
+            const donationsRes = await fetch(`${API_BASE}/api/donations`, {
+              credentials: "include",
+              headers,
+            });
+            const donationsData = donationsRes.ok
+              ? await donationsRes.json()
+              : { donations: [] };
+            const totalDonations = donationsData.donations
+              ? donationsData.donations.length
+              : 0;
+
+            // Fetch total users count (donations shows donor info)
+            const activeDonors = donationsData.donations
+              ? new Set(donationsData.donations.map((d) => d.donor)).size
+              : 0;
+
+            // Fetch total requests count
+            const requestsRes = await fetch(`${API_BASE}/api/requests`, {
+              credentials: "include",
+              headers,
+            });
+            const requestsData = requestsRes.ok
+              ? await requestsRes.json()
+              : { requests: [] };
+            const fulfilledRequests = requestsData.requests
+              ? requestsData.requests.filter((r) => r.fulfilled).length
+              : 0;
+
+            // Fetch total camps count
+            const campsRes = await fetch(`${API_BASE}/api/camps`, {
+              credentials: "include",
+              headers,
+            });
+            const campsData = campsRes.ok
+              ? await campsRes.json()
+              : { camps: [] };
+            const totalCamps = campsData.camps ? campsData.camps.length : 0;
+
+            // Update stat values in the UI using data-stat attributes
+            const donationsEl = document.querySelector(
+              '[data-stat="donations"]'
+            );
+            const donorsEl = document.querySelector('[data-stat="donors"]');
+            const fulfilledEl = document.querySelector(
+              '[data-stat="fulfilled"]'
+            );
+            const campsEl = document.querySelector('[data-stat="camps"]');
+
+            if (donationsEl) donationsEl.textContent = totalDonations;
+            if (donorsEl) donorsEl.textContent = activeDonors;
+            if (fulfilledEl) fulfilledEl.textContent = fulfilledRequests;
+            if (campsEl) campsEl.textContent = totalCamps;
+
+            console.log("Stats loaded:", {
+              totalDonations,
+              activeDonors,
+              fulfilledRequests,
+              totalCamps,
+            });
+          } catch (err) {
+            console.error("Stats fetch failed", err);
+          }
+        }
+
+        // Load stats immediately and then refresh every 30 seconds
+        loadStats();
+        setInterval(loadStats, 30000);
         const sidebar = document.getElementById("sidebar");
         const openBtn = document.getElementById("menuToggle"); // The Hamburger in the header (now .menu.btn6)
 
@@ -1434,21 +1694,12 @@
           setTimeout(() => (profileModal.style.display = "none"), 300);
         }
 
-        headerProfileBtn &&
-          headerProfileBtn.addEventListener("click", openProfileModal);
-        headerProfileBtn &&
-          headerProfileBtn.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              openProfileModal();
-            }
-          });
-
-        sidebarProfileBtn &&
-          sidebarProfileBtn.addEventListener("click", openProfileModal);
-
         profileClose &&
           profileClose.addEventListener("click", closeProfileModal);
+        headerProfileBtn &&
+          headerProfileBtn.addEventListener("click", openProfileModal);
+        sidebarProfileBtn &&
+          sidebarProfileBtn.addEventListener("click", openProfileModal);
 
         window.addEventListener("click", function (event) {
           if (event.target === profileModal) {
@@ -1472,18 +1723,169 @@
             alert("Edit profile feature coming soon.");
           });
 
+        async function openCampsModal() {
+          if (!campsModal) return;
+          const container = document.getElementById("campsListContainer");
+          if (container) {
+            container.innerHTML = '<p style="margin:0">Loading camps...</p>';
+          }
+
+          try {
+            const token = localStorage.getItem("token");
+            const res = await fetch(`${API_BASE}/api/camps`, {
+              credentials: "include",
+              headers: {
+                Accept: "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+            });
+            if (!res.ok) throw new Error("Failed to load camps");
+            const data = await res.json();
+            let list = data.camps || [];
+
+            // Filter out camps with dates that have passed
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            list = list.filter((camp) => {
+              if (!camp.date) return true; // Include camps without date
+              const campDate = new Date(camp.date);
+              campDate.setHours(0, 0, 0, 0);
+              return campDate >= today;
+            });
+
+            if (container) {
+              if (!list.length) {
+                container.innerHTML =
+                  '<p style="margin:0">no blood donation camps coming up, Stay Tuned..!</p>';
+              } else {
+                container.innerHTML = list
+                  .map(
+                    (c) => `
+                    <div class="list-item" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+                      <div style="flex: 1;">
+                        <div><strong>${
+                          c.title || "Blood Donation Camp"
+                        }</strong> — <span>${
+                      c.date ? new Date(c.date).toLocaleDateString() : "TBD"
+                    }</span></div>
+                        <div class="muted">${c.location || "Location TBD"}${
+                      c.organizer ? " • " + c.organizer : ""
+                    }</div>
+                      </div>
+                      <button onclick="registerForCamp('${c._id}', '${
+                      c.title
+                    }')" style="padding: 8px 16px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap; margin-left: 12px;">
+                        Register
+                      </button>
+                    </div>
+                  `
+                  )
+                  .join("");
+              }
+            }
+          } catch (e) {
+            if (container) {
+              container.innerHTML =
+                '<p style="margin:0">Failed to load camps. Please try again.</p>';
+            }
+          }
+
+          campsModal.style.display = "block";
+          setTimeout(() => campsModal.classList.add("show"), 10);
+        }
+
+        // Function to handle camp registration
+        async function registerForCamp(campId, campTitle) {
+          // Store camp info globally for form submission
+          window.currentCampId = campId;
+          window.currentCampTitle = campTitle;
+
+          const campRegisterModal =
+            document.getElementById("campRegisterModal");
+          if (campRegisterModal) {
+            campRegisterModal.style.display = "block";
+            setTimeout(() => campRegisterModal.classList.add("show"), 10);
+          }
+        }
+
+        // Handle camp registration form submission
+        const campRegisterForm = document.getElementById("campRegisterForm");
+        if (campRegisterForm) {
+          campRegisterForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const bloodType = document.getElementById("regBloodType").value;
+            const units = parseFloat(document.getElementById("regUnits").value);
+            const location = document.getElementById("regLocation").value;
+
+            try {
+              const token = localStorage.getItem("token");
+              const res = await fetch(`${API_BASE}/api/donations`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                  ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+                body: JSON.stringify({
+                  bloodType: bloodType,
+                  units: units,
+                  location: location,
+                  available: true,
+                }),
+              });
+
+              if (!res.ok) {
+                const error = await res.json();
+                alert(error.message || "Failed to register for camp");
+                return;
+              }
+
+              alert(`Successfully registered for ${window.currentCampTitle}!`);
+
+              // Close the registration modal
+              const campRegisterModal =
+                document.getElementById("campRegisterModal");
+              if (campRegisterModal) {
+                campRegisterModal.style.display = "none";
+                campRegisterModal.classList.remove("show");
+              }
+
+              // Reset form
+              campRegisterForm.reset();
+
+              // Refresh the camps list
+              openCampsModal();
+            } catch (e) {
+              alert("Error registering for camp: " + e.message);
+            }
+          });
+        }
+
         // --- Want & Donate Modals & Forms ---
         const wantModal = document.getElementById("wantModal");
         const donateModal = document.getElementById("donateModal");
+        const donorsListModal = document.getElementById("donorsListModal");
+        const requestsListModal = document.getElementById("requestsListModal");
+        const campsModal = document.getElementById("campsModal");
         const wantClose = wantModal && wantModal.querySelector(".want-close");
         const donateClose =
           donateModal && donateModal.querySelector(".donate-close");
+        const donorsListClose =
+          donorsListModal && donorsListModal.querySelector(".donorslist-close");
+        const requestsListClose =
+          requestsListModal &&
+          requestsListModal.querySelector(".requestslist-close");
+        const campsClose =
+          campsModal && campsModal.querySelector(".camps-close");
         const headerWantBtn = document.getElementById("headerWantBtn");
         const headerDonateBtn = document.getElementById("headerDonateBtn");
         const ctaRequestBtn = document.getElementById("ctaRequestBtn");
         const wantForm = document.getElementById("wantForm");
         const donateForm = document.getElementById("donateForm");
         const toastEl = document.getElementById("toast");
+        const logoutBtn = document.getElementById("logoutBtn");
 
         function showToast(msg) {
           if (!toastEl) return;
@@ -1520,10 +1922,152 @@
           setTimeout(() => (donateModal.style.display = "none"), 300);
         }
 
+        function closeCampsModal() {
+          if (!campsModal) return;
+          campsModal.classList.remove("show");
+          setTimeout(() => (campsModal.style.display = "none"), 300);
+        }
+
+        function closeCampRegisterModal() {
+          const campRegisterModal =
+            document.getElementById("campRegisterModal");
+          if (!campRegisterModal) return;
+          campRegisterModal.classList.remove("show");
+          setTimeout(() => (campRegisterModal.style.display = "none"), 300);
+        }
+
+        function openDonorsListModal() {
+          if (!donorsListModal) return;
+          try {
+            const list = JSON.parse(localStorage.getItem("donations") || "[]");
+            const container = document.getElementById("donorsListContainer");
+            if (container) {
+              if (!list.length) {
+                container.innerHTML =
+                  '<p style="margin:0">No donors yet. Offer a donation to be listed here.</p>';
+              } else {
+                container.innerHTML = list
+                  .map(
+                    (d) => `
+                    <div class="list-item">
+                      <div><strong>${d.name || "Anonymous"}</strong> — <span>${
+                      d.blood || "-"
+                    }</span></div>
+                      <div class="muted">${
+                        d.location || "Location not set"
+                      } • ${d.phone || "No phone"}</div>
+                    </div>
+                  `
+                  )
+                  .join("");
+              }
+            }
+          } catch (e) {
+            console.warn(e);
+          }
+          donorsListModal.style.display = "block";
+          setTimeout(() => donorsListModal.classList.add("show"), 10);
+        }
+        function closeDonorsListModal() {
+          if (!donorsListModal) return;
+          donorsListModal.classList.remove("show");
+          setTimeout(() => (donorsListModal.style.display = "none"), 300);
+        }
+
+        function openRequestsListModal() {
+          if (!requestsListModal) return;
+          const container = document.getElementById("requestsListContainer");
+          if (container) {
+            container.innerHTML = '<p style="margin:0">Loading requests...</p>';
+          }
+
+          try {
+            const token = localStorage.getItem("token");
+            const headers = { Accept: "application/json" };
+            if (token) {
+              headers.Authorization = `Bearer ${token}`;
+            }
+
+            fetch(`${API_BASE}/api/requests`, {
+              credentials: "include",
+              headers,
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                const list = data.requests || [];
+                if (container) {
+                  if (!list.length) {
+                    container.innerHTML =
+                      '<p style="margin:0">No requests yet. Post a request to see it here.</p>';
+                  } else {
+                    container.innerHTML = list
+                      .map((r) => {
+                        const requesterName =
+                          (r.requester && r.requester.name) || "Unknown";
+                        const fulfilledByName =
+                          (r.fulfilledBy && r.fulfilledBy.name) || null;
+                        const fulfilledAt = r.fulfilledAt
+                          ? new Date(r.fulfilledAt).toLocaleString()
+                          : null;
+
+                        const statusLine = r.fulfilled
+                          ? ` • ✓ Fulfilled$${
+                              fulfilledByName ? " by " + fulfilledByName : ""
+                            }$${fulfilledAt ? " on " + fulfilledAt : ""}`
+                          : "";
+
+                        return `
+                        <div class="list-item" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+                          <div style="flex: 1;">
+                            <div><strong>${requesterName}</strong> — <span>${
+                          r.bloodType || "-"
+                        }</span> • ${r.units || "?"} units</div>
+                            <div class="muted">${r.location || "-"}$${
+                          r.urgency ? " • " + r.urgency : ""
+                        }${statusLine}</div>
+                          </div>
+                          ${
+                            !r.fulfilled
+                              ? `<button onclick="fulfillRequest('${r._id}')" style="padding: 8px 16px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap; margin-left: 12px;">
+                            Fulfill
+                          </button>`
+                              : `<span style="padding: 8px 16px; background-color: #95a5a6; color: white; border-radius: 4px; white-space: nowrap; margin-left: 12px; font-weight: 600;">✓ Done</span>`
+                          }
+                        </div>
+                      `;
+                      })
+                      .join("");
+                  }
+                }
+              });
+          } catch (e) {
+            console.warn(e);
+          }
+          requestsListModal.style.display = "block";
+          setTimeout(() => requestsListModal.classList.add("show"), 10);
+        }
+        function closeRequestsListModal() {
+          if (!requestsListModal) return;
+          requestsListModal.classList.remove("show");
+          setTimeout(() => (requestsListModal.style.display = "none"), 300);
+        }
+
         headerWantBtn && headerWantBtn.addEventListener("click", openWantModal);
         ctaRequestBtn && ctaRequestBtn.addEventListener("click", openWantModal);
         headerDonateBtn &&
           headerDonateBtn.addEventListener("click", openDonateModal);
+
+        donorsListClose &&
+          donorsListClose.addEventListener("click", closeDonorsListModal);
+        requestsListClose &&
+          requestsListClose.addEventListener("click", closeRequestsListModal);
+        campsClose && campsClose.addEventListener("click", closeCampsModal);
+
+        const campRegisterClose = document.querySelector(
+          ".camp-register-close"
+        );
+        campRegisterClose &&
+          campRegisterClose.addEventListener("click", closeCampRegisterModal);
 
         wantClose && wantClose.addEventListener("click", closeWantModal);
         donateClose && donateClose.addEventListener("click", closeDonateModal);
@@ -1531,6 +2075,12 @@
         window.addEventListener("click", function (event) {
           if (event.target === wantModal) closeWantModal();
           if (event.target === donateModal) closeDonateModal();
+          if (event.target === donorsListModal) closeDonorsListModal();
+          if (event.target === requestsListModal) closeRequestsListModal();
+          if (event.target === campsModal) closeCampsModal();
+          const campRegisterModal =
+            document.getElementById("campRegisterModal");
+          if (event.target === campRegisterModal) closeCampRegisterModal();
         });
 
         document.addEventListener("keydown", function (event) {
@@ -1539,7 +2089,153 @@
               closeWantModal();
             if (donateModal && donateModal.style.display === "block")
               closeDonateModal();
+            if (donorsListModal && donorsListModal.style.display === "block")
+              closeDonorsListModal();
+            if (
+              requestsListModal &&
+              requestsListModal.style.display === "block"
+            )
+              closeRequestsListModal();
+            if (campsModal && campsModal.style.display === "block")
+              closeCampsModal();
           }
+        });
+
+        // --- Sidebar navigation actions ---
+        function smoothScrollTo(selector) {
+          const el = document.querySelector(selector);
+          if (!el) return;
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        document.querySelectorAll(".nav-item[data-key]").forEach((item) => {
+          item.addEventListener("click", (e) => {
+            const key = item.getAttribute("data-key");
+            switch (key) {
+              case "dashboard":
+                smoothScrollTo("#overview");
+                closeSidebar();
+                break;
+              case "find-donor":
+                openWantModal();
+                closeSidebar();
+                break;
+              case "all-donors":
+                openDonorsListModal();
+                closeSidebar();
+                break;
+              case "become-donor":
+                openDonateModal();
+                closeSidebar();
+                break;
+              case "camps":
+                openCampsModal();
+                closeSidebar();
+                break;
+              case "requests":
+                openRequestsListModal();
+                closeSidebar();
+                break;
+            }
+          });
+        });
+
+        // --- Logout ---
+        async function doLogout() {
+          try {
+            const token = localStorage.getItem("token");
+            const headers = { Accept: "application/json" };
+            if (token) headers["Authorization"] = `Bearer ${token}`;
+            await fetch(`${API_BASE}/api/auth/logout`, {
+              method: "POST",
+              credentials: "include",
+              headers,
+            }).catch(() => {});
+          } finally {
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+          }
+        }
+        logoutBtn && logoutBtn.addEventListener("click", doLogout);
+
+        // --- Global click delegation fallback ---
+        document.addEventListener(
+          "click",
+          (e) => {
+            const el = e.target.closest(
+              "[data-key], #headerWantBtn, #headerDonateBtn, #profileBtn, #logoutBtn"
+            );
+            if (!el) return;
+            if (el.id === "headerWantBtn") {
+              e.preventDefault();
+              openWantModal();
+              return;
+            }
+            if (el.id === "headerDonateBtn") {
+              e.preventDefault();
+              openDonateModal();
+              return;
+            }
+            if (el.id === "profileBtn") {
+              e.preventDefault();
+              openProfileModal();
+              return;
+            }
+            if (el.id === "logoutBtn") {
+              e.preventDefault();
+              doLogout();
+              return;
+            }
+            const key = el.getAttribute("data-key");
+            switch (key) {
+              case "dashboard":
+                e.preventDefault();
+                smoothScrollTo("#overview");
+                closeSidebar();
+                break;
+              case "find-donor":
+                e.preventDefault();
+                openWantModal();
+                closeSidebar();
+                break;
+              case "all-donors":
+                e.preventDefault();
+                openDonorsListModal();
+                closeSidebar();
+                break;
+              case "become-donor":
+                e.preventDefault();
+                openDonateModal();
+                closeSidebar();
+                break;
+              case "camps":
+                e.preventDefault();
+                smoothScrollTo("#stats");
+                closeSidebar();
+                break;
+              case "requests":
+                e.preventDefault();
+                openRequestsListModal();
+                closeSidebar();
+                break;
+            }
+          },
+          true
+        );
+
+        // --- Global error reporter ---
+        window.addEventListener("error", (ev) => {
+          try {
+            showToast &&
+              showToast("Script error: " + (ev.message || "unknown"));
+            console.error("Global error:", ev.error || ev.message);
+          } catch (_) {}
+        });
+        window.addEventListener("unhandledrejection", (ev) => {
+          try {
+            showToast && showToast("Unhandled error");
+            console.error("Unhandled rejection:", ev.reason);
+          } catch (_) {}
         });
 
         function updateStatByLabel(label, delta) {
@@ -1561,67 +2257,96 @@
           }
         }
 
-        // Persist arrays in localStorage
-        function pushToLocal(key, obj) {
-          try {
-            const existing = JSON.parse(localStorage.getItem(key) || "[]");
-            existing.unshift(obj);
-            localStorage.setItem(key, JSON.stringify(existing));
-          } catch (e) {
-            console.warn(e);
+        async function apiPost(path, body) {
+          const token = localStorage.getItem("token");
+          console.log(`apiPost ${path}: token present:`, !!token);
+          const headers = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          };
+          if (token) headers.Authorization = `Bearer ${token}`;
+          const res = await fetch(`${API_BASE}${path}`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body: JSON.stringify(body),
+          });
+          console.log(`apiPost ${path}: response status`, res.status);
+          if (!res.ok) {
+            const msg = await res.text();
+            throw new Error(`${res.status}: ${msg || "Request failed"}`);
           }
+          return res.json();
         }
 
         wantForm &&
-          wantForm.addEventListener("submit", function (e) {
+          wantForm.addEventListener("submit", async function (e) {
             e.preventDefault();
-            const data = {
-              name: document.getElementById("reqName").value.trim(),
-              blood: document.getElementById("reqBlood").value,
-              units: document.getElementById("reqUnits").value,
-              location: document.getElementById("reqLocation").value.trim(),
-              phone: document.getElementById("reqPhone").value.trim(),
-              message: document.getElementById("reqMessage").value.trim(),
-              createdAt: new Date().toISOString(),
-            };
-            if (
-              !data.name ||
-              !data.blood ||
-              !data.units ||
-              !data.location ||
-              !data.phone
-            ) {
-              showToast("Please complete the required fields");
+            const bloodType = document.getElementById("reqBlood").value.trim();
+            const units = parseFloat(document.getElementById("reqUnits").value);
+            const location = document
+              .getElementById("reqLocation")
+              .value.trim();
+            const urgency =
+              document.getElementById("reqMessage").value.trim() || "medium";
+
+            if (!bloodType || !units || !location) {
+              showToast("Please complete: Blood Type, Units, and Location");
               return;
             }
-            pushToLocal("bloodRequests", data);
-            showToast("Request posted — donors will be notified");
-            wantForm.reset();
-            closeWantModal();
+
+            const data = {
+              bloodType,
+              units,
+              location,
+              urgency,
+            };
+            try {
+              await apiPost("/api/requests", data);
+              showToast("Request posted — admins can see it now.");
+              wantForm.reset();
+              closeWantModal();
+            } catch (err) {
+              console.error("Request error:", err);
+              showToast(`Error: ${err.message}`);
+            }
           });
 
         donateForm &&
-          donateForm.addEventListener("submit", function (e) {
+          donateForm.addEventListener("submit", async function (e) {
             e.preventDefault();
-            const data = {
-              name: document.getElementById("donorName").value.trim(),
-              blood: document.getElementById("donorBlood").value,
-              availability: document
-                .getElementById("donAvailability")
-                .value.trim(),
-              location: document.getElementById("donLocation").value.trim(),
-              phone: document.getElementById("donPhone").value.trim(),
-              createdAt: new Date().toISOString(),
-            };
-            if (!data.name || !data.blood || !data.phone) {
-              showToast("Please complete the required fields");
+            const bloodType = document
+              .getElementById("donorBlood")
+              .value.trim();
+            const units = parseFloat(document.getElementById("donUnits").value);
+            const location = document
+              .getElementById("donLocation")
+              .value.trim();
+            const phone = document.getElementById("donPhone").value.trim();
+
+            if (!bloodType || !units || !location || !phone) {
+              showToast(
+                "Please complete: Blood Type, Units, Location, and Phone"
+              );
               return;
             }
-            pushToLocal("donations", data);
-            updateStatByLabel("Total Donations", 1);
-            showToast("Thanks! Your donation offer is recorded.");
-            donateForm.reset();
-            closeDonateModal();
+
+            const data = {
+              bloodType,
+              units,
+              location,
+              available: true,
+            };
+            try {
+              await apiPost("/api/donations", data);
+              updateStatByLabel("Total Donations", 1);
+              showToast("Thanks! Your donation offer is recorded.");
+              donateForm.reset();
+              closeDonateModal();
+            } catch (err) {
+              console.error("Donation error:", err);
+              showToast(`Error: ${err.message}`);
+            }
           });
       });
     </script>

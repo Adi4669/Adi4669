@@ -25,7 +25,7 @@ body {
   display: grid;
   place-items: center;
   margin-top: 100px;
-  transition: opacity 0.5s ease;
+  transition: opacity ease 0.3s;
 }
 
 .login-container {
@@ -88,12 +88,12 @@ body::before {
   background-color: transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .home-btn:hover {
   transform: scale(1.05);
-  transition: 0.3s;
+  transition: ease 0.3s;
   color: black;
   background-color: rgb(255, 79, 79);
   padding: 6px;
@@ -118,7 +118,7 @@ body::before {
   opacity: 1;
   left: 60px;
   bottom: -40px;
-  transition: 0.2s;
+  transition: ease 0.3s;
 }
 
 /* old ham-menu rules removed (using .menu.btn6 instead) */
@@ -144,7 +144,7 @@ body::before {
   padding: 10px 8px 6px 8px;
   border-radius: 7px;
   border: 2px solid transparent;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .input-wrapper label {
@@ -155,7 +155,7 @@ body::before {
   font-size: 17px;
   color: #666;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   background-color: transparent;
 }
 
@@ -194,7 +194,7 @@ body::before {
   border-radius: 6px;
   cursor: pointer;
   font-size: 17px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 
   display: flex;              /* turn button into flex container */
   align-items: center;        /* vertical centering */
@@ -219,7 +219,7 @@ body::before {
   display: block;
   padding: 7px;
   margin-bottom: 9px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .signup:hover {
@@ -235,6 +235,6 @@ body::before {
 
 .fpw:hover {
   color: rgb(174, 0, 255);
-  transition: 0.3s;
+  transition: ease 0.3s;
   text-decoration: underline;
 }

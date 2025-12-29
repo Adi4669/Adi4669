@@ -72,6 +72,11 @@
     <script>
       const API_BASE = "http://localhost:4000";
 
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
       async function nextPage(e) {
         e.preventDefault();
 
@@ -84,6 +89,12 @@
 
         if (email === "" || password === "") {
           errorMsg.textContent = "Error: Please fill all the fields!";
+          errorMsg.style.display = "block";
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          errorMsg.textContent = "Error: Please enter a valid email address.";
           errorMsg.style.display = "block";
           return;
         }
@@ -108,8 +119,29 @@
             localStorage.setItem("token", data.token);
           }
 
-          // On success, go to signed-in page
-          window.location.href = "signed_in.html";
+          // Determine destination based on role; fallback to /me if role missing
+          let role = data.user?.role;
+          if (!role && data.token) {
+            try {
+              const meRes = await fetch(`${API_BASE}/api/auth/me`, {
+                headers: {
+                  Authorization: `Bearer ${data.token}`,
+                  Accept: "application/json",
+                },
+                credentials: "include",
+              });
+              if (meRes.ok) {
+                const meData = await meRes.json();
+                role = meData.user?.role;
+              }
+            } catch (_) {}
+          }
+
+          if (role === "admin") {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "signed_in.html";
+          }
         } catch (err) {
           errorMsg.textContent = err.message || "Login failed";
           errorMsg.style.display = "block";

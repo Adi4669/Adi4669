@@ -1,7 +1,7 @@
 #overview img {
   border-radius: 20px !important;
   box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
-  transition: transform 0.3s ease;
+  transition: transform ease 0.3s;
 }
 
 #overview img:hover {
@@ -20,7 +20,7 @@ body {
   margin-bottom: 0;
   /* reserve space for the fixed header so content sits directly below it */
   padding-top: 102px;
-  transition: opacity 0.5s ease;
+  transition: opacity ease 0.3s;
   color: #333;
 }
 
@@ -109,6 +109,26 @@ body.fade-out {
   align-items: center;
 }
 
+.brand-logo {
+  height: 70px; /* larger logo */
+  margin-left: 10px;
+  transition: transform ease 0.3s, box-shadow ease 0.3s;
+}
+
+/* show light logo by default, hide dark logo */
+.brand-logo-light { display: block; }
+.brand-logo-dark { display: none; }
+
+/* when body has .dark, swap which logo is visible */
+body.dark .brand-logo-light { display: none; }
+body.dark .brand-logo-dark { display: block; }
+
+.brand-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 14px rgba(212, 32, 32, 0.4);
+  cursor: pointer;
+}
+
 /* Add vertical spacing between the sidebar brand (BD badge) and the nav list */
 .sidebar .brand-header { margin-bottom: 14px; }
 
@@ -124,7 +144,7 @@ body.fade-out {
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background ease 0.3s;
   /* keep the hamburger visible above the sidebar by using fixed positioning */
   position: fixed;
   border: none;
@@ -143,7 +163,7 @@ body.fade-out {
   background: #fff;
   border-radius: 2px;
   position: relative;
-  transition: transform 0.35s ease, background 0.35s ease;
+  transition: transform ease 0.3s, background 0.35s ease;
 }
 .menu.btn6 .icon::before,
 .menu.btn6 .icon::after {
@@ -154,7 +174,7 @@ body.fade-out {
   height: 4px;
   background: #fff;
   border-radius: 2px;
-  transition: transform 0.35s ease, opacity 0.35s ease;
+  transition: transform ease 0.3s, opacity 0.35s ease;
 }
 .menu.btn6 .icon::before { top: -10px; }
 .menu.btn6 .icon::after { top: 10px; }
@@ -162,7 +182,7 @@ body.fade-out {
 /* Open state: morph the three bars into a centered X and keep it visible */
 .menu.btn6.open .icon {
   background: transparent; /* hide middle bar */
-  transition-duration: 0.35s;
+  transition: ease 0.3s;
 }
 .menu.btn6.open .icon::before,
 .menu.btn6.open .icon::after {
@@ -192,7 +212,7 @@ body.fade-out {
   background: #fff;
   position: relative;
   border-radius: 2px;
-  transition: transform 0.35s ease, background 0.2s ease;
+  transition: transform ease 0.3s, background 0.2s ease;
 }
 .menu.btn6 .icon::before,
 .menu.btn6 .icon::after {
@@ -203,7 +223,7 @@ body.fade-out {
   height: 3px;
   background: #fff;
   border-radius: 2px;
-  transition: transform 0.35s ease, top 0.35s ease, opacity 0.35s ease;
+  transition: transform ease 0.3s, top 0.35s ease, opacity 0.35s ease;
 }
 .menu.btn6 .icon::before { top: -8px; }
 .menu.btn6 .icon::after { top: 8px; }
@@ -226,7 +246,7 @@ body.sidebar-open .header .login { display: none !important; }
   font-weight: 500;
   margin-right: 30px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   display: inline-block;
 }
 .nav-link:hover {
@@ -246,7 +266,7 @@ body.sidebar-open .header .login { display: none !important; }
   text-decoration: none;
   background-color: #F3F4F6;
   color: #1F1F1F;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .want:hover, .donate:hover {
@@ -282,7 +302,8 @@ body.sidebar-open .header .login { display: none !important; }
 }
 
 #features{
-  scroll-margin-top: 10px;
+  scroll-margin-top: 80px;
+  scroll-behavior: smooth;
 }
 
 .features {
@@ -313,7 +334,7 @@ body.sidebar-open .header .login { display: none !important; }
   border: 2px solid #e63946;
   color: #000000;
   border-radius: 25px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   margin: 0 10px;
   position: relative; /* required for circular indicator */
 }
@@ -344,7 +365,7 @@ body.sidebar-open .header .login { display: none !important; }
   display: inline-block;
   cursor: pointer;
   padding-bottom: 6px;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .nav-btn:not(:last-child) {
@@ -381,7 +402,7 @@ body.sidebar-open .header .login { display: none !important; }
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
+  transition: all ease 0.3s;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -398,7 +419,7 @@ body.sidebar-open .header .login { display: none !important; }
   height: 4px;
   background: linear-gradient(90deg, #e63946 0%, #d32f2f 100%);
   transform: scaleX(0);
-  transition: transform 0.3s ease;
+  transition: transform ease 0.3s;
 }
 
 .feature-card:hover::before {
@@ -418,7 +439,7 @@ body.sidebar-open .header .login { display: none !important; }
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
   color: #d32f2f;
-  transition: color 0.3s ease;
+  transition: color ease 0.3s;
 }
 
 .feature-card:hover h3 {
@@ -430,7 +451,7 @@ body.sidebar-open .header .login { display: none !important; }
   color: #666;
   font-size: 0.9rem;
   line-height: 1.6;
-  transition: color 0.3s ease;
+  transition: color ease 0.3s;
 }
 
 .feature-card:hover p {
@@ -571,7 +592,7 @@ body.sidebar-open .header .login { display: none !important; }
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
   display: inline-block;
 }
 
@@ -622,7 +643,7 @@ body.sidebar-open .header .login { display: none !important; }
   font-weight: 700;
   font-size: 20px;
   color: white;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 
 .blood-type-badge:hover {
@@ -639,15 +660,6 @@ body.sidebar-open .header .login { display: none !important; }
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.modal.show {
-  opacity: 1;
 }
 
 .modal-content {
@@ -685,7 +697,7 @@ body.sidebar-open .header .login { display: none !important; }
   line-height: 1;
   cursor: pointer;
   z-index: 1;
-  transition: transform 0.2s ease;
+  transition: transform ease 0.3s;
   width: 40px;
   height: 40px;
   display: flex;
@@ -757,7 +769,7 @@ body.sidebar-open .header .login { display: none !important; }
   background: rgba(255, 255, 255, 0.6);
   border-radius: 15px;
   border-left: 4px solid #d32f2f;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform ease 0.3s, box-shadow 0.2s ease;
 }
 
 .modal-section:hover {
@@ -947,7 +959,7 @@ body.sidebar-open .header .login { display: none !important; }
 .site-footer a {
   color: #ffdede;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all ease 0.3s;
 }
 .site-footer a:hover {
   text-decoration: underline;
@@ -1050,7 +1062,7 @@ body.sidebar-open .header .login { display: none !important; }
   --muted: #9aa4b2;
   --width-open: 380px; /* increased to match signed_in.css */
   --width-closed: 140px; /* larger collapsed width for readability */
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: ease 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .app { min-height: 100vh; }
@@ -1076,7 +1088,7 @@ body.sidebar-open .header .login { display: none !important; }
 }
 
 .sidebar.active { transform: translateX(0); }
-.sidebar.collapsed { width: var(--width-closed); transition: width 220ms ease; }
+.sidebar.collapsed { width: var(--width-closed); transition: width ease 0.3s; }
 
 .sidebar {
   position: fixed;
@@ -1098,7 +1110,7 @@ body.sidebar-open .header .login { display: none !important; }
   -webkit-backdrop-filter: blur(6px);
 }
 .nav-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; }
-.nav-item { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:10px; cursor:pointer; color:#dbe9f5; text-decoration:none; transition: background 180ms ease, transform 180ms ease; }
+.nav-item { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:10px; cursor:pointer; color:#dbe9f5; text-decoration:none; transition: background ease 0.3s, transform ease 0.3s; }
 .nav-item:hover { background: rgba(230,57,70,0.06); transform: translateX(6px); }
 .nav-item .icon { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; border-radius:8px; background: rgba(255,255,255,0.02); }
 .nav-item[aria-current="page"] { background: linear-gradient(90deg, rgba(230,57,70,0.14), rgba(230,57,70,0.04)); color:#fff; box-shadow: inset 4px 0 0 0 rgba(230,57,70,0.95); }
@@ -1162,7 +1174,7 @@ nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   opacity: 0;
-  transition: opacity 260ms ease;
+  transition: opacity ease 0.3s;
   z-index: 10005; /* header is 9999, sidebar is 10010 -> overlay sits between */
   pointer-events: none;
 }
@@ -1192,7 +1204,7 @@ nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius
 .brand .logo { margin-left: 8px; margin-right: 6px; }
 
 /* Theme toggle button */
-.theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;border:none;background:#F3F4F6;color:#1F1F1F;transition:all .3s ease}
+.theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;border:none;background:#F3F4F6;color:#1F1F1F;transition: all ease 0.3s}
 .theme-toggle:hover{background:#524bb4;color:#fff;transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,.2)}
 
 /* Dark mode overrides */
@@ -1206,13 +1218,13 @@ body.dark .tab{background:transparent;color:#E6EDF3;border-color:#e63946}
 body.dark .tab:hover{background:#e63946;color:#fff}
 body.dark .tab.tab-active{background:transparent;color:#e63946;border-bottom-color:#e63946}
 body.dark .feature-card{background:linear-gradient(135deg,#0f172a 0%,#0b1220 100%);border-color:rgba(255,255,255,0.06);box-shadow:0 8px 25px rgba(0,0,0,0.4)}
-body.dark .feature-card p{color:#c9d1d9}
+body.dark .feature-card p{color:#ffffff}
 body.dark .feature-card h3{color:#e63946}
 body.dark .feature-card:hover{background:linear-gradient(135deg,#1f2937 0%,#111827 100%);color:#E6EDF3}
 body.dark .stats-section{background:linear-gradient(180deg,rgba(17,24,39,0.85),rgba(31,41,55,0.7));box-shadow:0 10px 30px rgba(0,0,0,0.5)}
 body.dark .stat-card{background:#0b1220;border-color:rgba(255,255,255,0.06);box-shadow:0 6px 18px rgba(0,0,0,0.4)}
-body.dark .stat-value{color:#E6EDF3}
-body.dark .stat-label{color:#9aa4b2}
+body.dark .stat-value{color:#ffffff}
+body.dark .stat-label{color:#ffffff}
 body.dark .modal-content{background:linear-gradient(135deg,#0b1220 0%,#0f172a 100%)}
 body.dark .modal-section{background:rgba(255,255,255,0.06);border-left-color:#d32f2f}
 body.dark .modal-section p,body.dark .modal-section ul li{color:#E6EDF3}
@@ -1231,8 +1243,36 @@ body,
 .cta-content,
 .nav-link,
 .theme-toggle {
-  transition: background-color .35s ease, color .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease;
+  transition: background-color 100ms ease, color 1s ease,
+              border-color 10s ease, background 1s ease,
+              box-shadow 1s ease, opacity 1s ease;
 }
 
 /* Ensure Overview heading turns white in dark mode */
 body.dark #overview h2 { color: #fff !important; }
+/* Make all paragraph text white in dark mode (overrides inline gray) */
+body.dark p { color: #ffffff !important; }
+
+/* Dark mode hover accents for Overview & Features */
+body.dark #overview,
+body.dark .features {
+  transition: background-color 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark #overview:hover {
+  border-color: #e63946;
+  box-shadow: 0 14px 40px rgba(230, 57, 70, 0.6);
+}
+
+body.dark #overview:hover h2,
+body.dark .features:hover h2,
+body.dark .features:hover h3 {
+  color: #e63946 !important;
+}
+
+/* Dark mode: header nav buttons for Overview & Features turn red on hover */
+body.dark .desktop-nav a.nav-link[href="#overview"]:hover,
+body.dark .desktop-nav a.nav-link[href="#features"]:hover {
+  color: #e63946 !important;
+}

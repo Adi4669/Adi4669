@@ -122,6 +122,19 @@
     <script>
       const API_BASE = "http://localhost:4000";
 
+      function isValidEmail(email) {
+        // Basic email format check: something@something.domain
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function isValidPhone(phone) {
+        // Remove all non-digit characters then ensure exactly 10 digits
+        const digitsOnly = phone.replace(/\D/g, "");
+        const phoneRegex = /^\d{10}$/;
+        return phoneRegex.test(digitsOnly);
+      }
+
       async function nextPage(e) {
         e.preventDefault();
         const form = document.getElementById("form1");
@@ -145,6 +158,16 @@
           city === ""
         ) {
           alert("Error: Please fill all the fields!");
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          alert("Error: Please enter a valid email address.");
+          return;
+        }
+
+        if (!isValidPhone(phone)) {
+          alert("Error: Phone number must be exactly 10 digits.");
           return;
         }
 

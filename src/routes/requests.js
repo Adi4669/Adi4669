@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import Request from '../models/Request.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireAuth, requireAdmin } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -45,6 +45,16 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
   try {
     const id = req.params.id;
     const deleted = await Request.findOneAndDelete({ _id: id, requester: req.userId });
+    if (!deleted) return res.status(404).json({ message: 'Not found' });
+    res.json({ message: 'Deleted' });
+  } catch (err) { next(err); }
+});
+
+// Admin: delete any request by id
+router.delete('/:id/admin', requireAuth, requireAdmin, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Request.findByIdAndDelete(id);
     if (!deleted) return res.status(404).json({ message: 'Not found' });
     res.json({ message: 'Deleted' });
   } catch (err) { next(err); }

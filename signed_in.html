@@ -1039,13 +1039,6 @@
             <p id="profileLocation"></p>
           </div>
           <div class="modal-section">
-            <h3>Your Activity</h3>
-            <p>
-              <span id="profileDonationCount">0</span> donations made &bull;
-              <span id="profileReceivedCount">0</span> times received
-            </p>
-          </div>
-          <div class="modal-section">
             <button id="editProfileBtn" class="cta-btn primary">
               Edit Profile
             </button>
@@ -1466,13 +1459,69 @@
             });
           });
 
-        // --- 6. Active State for Menu Items ---
+        // --- 6. Active State & Behavior for Sidebar Menu Items ---
         document.querySelectorAll(".nav-item[data-key]").forEach((it) => {
           it.addEventListener("click", () => {
+            // visual active state
             document
               .querySelectorAll(".nav-item[data-key]")
               .forEach((x) => x.removeAttribute("aria-current"));
             it.setAttribute("aria-current", "page");
+
+            // behavior based on nav key
+            const key = it.getAttribute("data-key");
+            const scrollTo = (id) => {
+              const el = document.getElementById(id);
+              if (el && typeof el.scrollIntoView === "function") {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            };
+
+            switch (key) {
+              case "dashboard":
+                // go to main overview section
+                scrollTo("overview");
+                break;
+              case "find-donor":
+                // highlight feature area describing donor search
+                scrollTo("features");
+                break;
+              case "donor-list":
+              case "all-donors":
+                // no dedicated donor list yet
+                if (typeof showToast === "function") {
+                  showToast("Donor list view coming soon.");
+                }
+                break;
+              case "become-donor":
+                // reuse existing donate flow
+                if (typeof openDonateModal === "function") {
+                  openDonateModal();
+                }
+                break;
+              case "camps":
+                // no dedicated camps view yet; point to CTA
+                if (typeof showToast === "function") {
+                  showToast("Camps view coming soon.");
+                }
+                scrollTo("cta");
+                break;
+              case "requests":
+                // open existing request-blood modal
+                if (typeof openWantModal === "function") {
+                  openWantModal();
+                } else {
+                  scrollTo("stats");
+                }
+                break;
+              default:
+                break;
+            }
+
+            // close sidebar if it's open so navigation feels responsive
+            if (typeof closeSidebar === "function") {
+              closeSidebar();
+            }
           });
         });
 

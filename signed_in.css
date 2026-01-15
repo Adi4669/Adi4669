@@ -106,6 +106,30 @@ img {
   gap: 20px; 
 }
 
+.nav-left {
+  margin-left: 80px; /* leave space for floating hamburger */
+}
+
+.brand-logo {
+  height: 70px;
+  margin-left: 10px;
+  transition: transform ease 0.3s, box-shadow ease 0.3s;
+}
+
+/* show light logo by default, hide dark logo */
+.brand-logo-light { display: block; }
+.brand-logo-dark { display: none; }
+
+/* when body has .dark, swap which logo is visible */
+body.dark .brand-logo-light { display: none; }
+body.dark .brand-logo-dark { display: block; }
+
+.brand-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 14px rgba(212, 32, 32, 0.4);
+  cursor: pointer;
+}
+
 
 /* Animated hamburger/menu button (copied/adapted) */
 .menu.btn6 {
@@ -214,11 +238,9 @@ body.sidebar-open .header .profile-btn {
   transform: translateY(0);
 }
 
-/* Align header nav items to extreme right */
+/* Header desktop nav: inline row of links + buttons */
 .desktop-nav {
-  position: absolute;
-  right: 18px;
-  top: 18px;
+  position: static;
   display: flex;
   gap: 12px;
   align-items: center;
@@ -1582,11 +1604,9 @@ nav::-webkit-scrollbar-thumb {
     margin-left: 0;
   }
 
-  /* Position desktop nav to the right on small screens as well */
+  /* Keep desktop nav inline on small screens as well */
   .desktop-nav {
-    position: absolute;
-    right: 18px;
-    top: 18px;
+    position: static;
   }
 
   .sidebar.open,

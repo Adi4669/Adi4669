@@ -414,6 +414,40 @@
         </div>
       </div>
     </section>
+    <!-- Blood Availability Section -->
+    <section id="availability" class="inventory-section">
+      <div class="inventory-header">
+        <h3>Blood Availability by Type</h3>
+        <p>
+          Choose a blood group to see how many units are currently available
+          from active donation offers.
+        </p>
+      </div>
+      <div class="inventory-body">
+        <div class="inventory-control">
+          <label for="inventoryBloodType">Blood type</label>
+          <select id="inventoryBloodType">
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="inventory-result">
+          <div class="inventory-units">
+            <span id="inventoryUnits">-</span>
+            <span class="inventory-units-label">units available</span>
+          </div>
+          <p id="inventorySummary" class="inventory-summary">
+            Select a blood type to view live availability.
+          </p>
+        </div>
+      </div>
+    </section>
     <div class="app" id="appRoot">
       <aside id="sidebar" class="sidebar">
         <div class="brand" role="banner">
@@ -1158,6 +1192,58 @@
         const tabs = document.querySelectorAll(".tab");
         const tabContents = document.querySelectorAll(".tab-content");
 
+        // --- 3a. Blood availability (inventory) state ---
+        let inventoryDonations = [];
+        const inventorySelect = document.getElementById("inventoryBloodType");
+        const inventoryUnitsEl = document.getElementById("inventoryUnits");
+        const inventorySummaryEl = document.getElementById("inventorySummary");
+
+        function recalcInventory() {
+          if (!inventorySelect || !inventoryUnitsEl) return;
+
+          if (
+            !Array.isArray(inventoryDonations) ||
+            !inventoryDonations.length
+          ) {
+            inventoryUnitsEl.textContent = "-";
+            if (inventorySummaryEl) {
+              inventorySummaryEl.textContent =
+                "No live donation data yet. Try again after a donation is recorded.";
+            }
+            return;
+          }
+
+          const selectedType = inventorySelect.value;
+          const available = inventoryDonations.filter(
+            (d) => d && d.available === true
+          );
+          const matching = available.filter(
+            (d) => d.bloodType === selectedType
+          );
+          const totalUnits = matching.reduce((sum, d) => {
+            const units = Number(d.units);
+            return sum + (Number.isFinite(units) ? units : 0);
+          }, 0);
+
+          inventoryUnitsEl.textContent = String(totalUnits);
+          if (inventorySummaryEl) {
+            if (!matching.length) {
+              inventorySummaryEl.textContent =
+                "No active donations currently available for this blood type.";
+            } else {
+              inventorySummaryEl.textContent = `${
+                matching.length
+              } active donation${
+                matching.length > 1 ? "s" : ""
+              } contributing to this total.`;
+            }
+          }
+        }
+
+        if (inventorySelect) {
+          inventorySelect.addEventListener("change", recalcInventory);
+        }
+
         tabs.forEach((tab) => {
           const handleTabClick = () => {
             tabs.forEach((item) => item.classList.remove("tab-active"));
@@ -1267,6 +1353,11 @@
               ? donationsData.donations.length
               : 0;
 
+            // Store for inventory calculations (front-end aggregation)
+            inventoryDonations = Array.isArray(donationsData.donations)
+              ? donationsData.donations
+              : [];
+
             // Fetch total users count (donations shows donor info)
             const activeDonors = donationsData.donations
               ? new Set(donationsData.donations.map((d) => d.donor)).size
@@ -1315,6 +1406,9 @@
               );
             if (campsEl)
               campsEl.setAttribute("data-target", String(totalCamps));
+
+            // Refresh blood availability section with latest data
+            recalcInventory();
 
             console.log("Stats loaded:", {
               totalDonations,

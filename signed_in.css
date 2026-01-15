@@ -1157,6 +1157,80 @@ body.sidebar-open .header .profile-btn {
   margin-top: 6px;
 }
 
+/* Blood availability / inventory section */
+.inventory-section {
+  max-width: 1200px;
+  margin: 10px auto 40px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,240,240,0.8));
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+.inventory-header h3 {
+  margin: 0 0 4px 4px;
+  font-size: 20px;
+  color: #b71c1c;
+  font-weight: 700;
+}
+.inventory-header p {
+  margin: 0 0 10px 4px;
+  font-size: 14px;
+  color: #555;
+}
+.inventory-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.inventory-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.inventory-control label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+.inventory-control select {
+  min-width: 140px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+.inventory-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+.inventory-units {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+}
+.inventory-units-label {
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+.inventory-summary {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .inventory-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 @media (max-width: 900px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -1538,6 +1612,14 @@ body.dark .stats-section{background:linear-gradient(180deg,rgba(17,24,39,0.85),r
 body.dark .stat-card{background:#0b1220;border-color:rgba(255,255,255,0.06);box-shadow:0 6px 18px rgba(0,0,0,0.4)}
 body.dark .stat-value{color:#ffffff}
 body.dark .stat-label{color:#ffffff}
+body.dark .inventory-section{background:linear-gradient(180deg,rgba(17,24,39,0.85),rgba(31,41,55,0.7));box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+body.dark .inventory-header h3{color:#e63946}
+body.dark .inventory-header p,
+body.dark .inventory-control label,
+body.dark .inventory-units-label,
+body.dark .inventory-summary{color:#E6EDF3}
+body.dark .inventory-units{color:#ffffff}
+body.dark .inventory-control select{background:#0b1220;color:#E6EDF3;border-color:rgba(255,255,255,0.15)}
 body.dark .modal-content{background:linear-gradient(135deg,#0b1220 0%,#0f172a 100%)}
 body.dark .modal-section{background:rgba(255,255,255,0.06);border-left-color:#d32f2f}
 body.dark .modal-section p,body.dark .modal-section ul li{color:#E6EDF3}

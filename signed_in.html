@@ -1098,6 +1098,7 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#stats">Donation Stats</a></li>
             <li><a href="#cta">More Information</a></li>
+            <li><a href="#inventorySummary">Blood Availability</a></li>
           </ul>
         </div>
 
@@ -1957,6 +1958,9 @@
             setTimeout(() => campRegisterModal.classList.add("show"), 10);
           }
         }
+
+        // Expose for inline onclick handlers in the camps list
+        window.registerForCamp = registerForCamp;
 
         // Handle camp registration form submission
         const campRegisterForm = document.getElementById("campRegisterForm");

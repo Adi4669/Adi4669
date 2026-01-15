@@ -340,7 +340,7 @@ body.sidebar-open .header .profile-btn {
 }
 
 #overview{
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -353,6 +353,14 @@ body.sidebar-open .header .profile-btn {
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#features,
+#stats,
+#cta,
+#availability,
+#inventorySummary {
+  scroll-margin-top: 90px;
 }
 
 .welcome-message {
@@ -486,12 +494,11 @@ body.sidebar-open .header .profile-btn {
 /* Call to Action Section */
 .cta-section {
   max-width: 1200px;
-  margin: 20px auto 60px;
   padding: 0 20px;
 }
 
 .cta-content {
-  margin-top: 300px;
+  margin-top: 120px;
   background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
   border-radius: 20px;
   padding: 60px;
@@ -1159,35 +1166,36 @@ body.sidebar-open .header .profile-btn {
 
 /* Blood availability / inventory section */
 .inventory-section {
-  max-width: 1200px;
-  margin: 10px auto 40px;
-  padding: 18px 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,240,240,0.8));
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  max-width: 960px;
+  margin: 90px auto 0;
+  padding: 26px 28px;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,244,244,0.96) 45%, rgba(255,232,232,0.96) 100%);
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.10);
+  border: 1px solid rgba(248, 187, 208, 0.65);
 }
 .inventory-header h3 {
-  margin: 0 0 4px 4px;
-  font-size: 20px;
-  color: #b71c1c;
-  font-weight: 700;
+  margin: 0 0 6px 2px;
+  font-size: 24px;
+  color: #c62828;
+  font-weight: 800;
 }
 .inventory-header p {
-  margin: 0 0 10px 4px;
+  margin: 0 0 18px 2px;
   font-size: 14px;
   color: #555;
 }
 .inventory-body {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 16px;
+  gap: 22px;
 }
 .inventory-control {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 .inventory-control label {
   font-size: 13px;
@@ -1195,22 +1203,38 @@ body.sidebar-open .header .profile-btn {
   color: #444;
 }
 .inventory-control select {
-  min-width: 140px;
-  padding: 6px 10px;
-  border-radius: 8px;
+  min-width: 160px;
+  padding: 8px 11px;
+  border-radius: 10px;
   border: 1px solid #e0e0e0;
   font-size: 14px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+.inventory-control select:focus {
+  outline: none;
+  border-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229,57,53,0.15);
+  transform: translateY(-1px);
 }
 .inventory-result {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   align-items: flex-start;
 }
 .inventory-units {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   font-size: 22px;
   font-weight: 700;
   color: #111;
+}
+#inventoryUnits {
+  font-size: 34px;
+  font-weight: 800;
 }
 .inventory-units-label {
   margin-left: 4px;
